@@ -15,6 +15,7 @@ def agent_env(agent: Agent, flags: set[str]) -> dict:
         "age": agent.age,
         "income": agent.income,
         "cohort": agent.cohort or "",
+        "community": agent.community,
         "life_stage": agent.life_stage,
         "budget": agent.budget,
         "flags": sorted(flags),
@@ -31,6 +32,7 @@ def select(
     """Agents matching every condition; then `fraction`/`count` sampling; then widening."""
     matched: list[str] = []
     cohorts = [selector.cohort] if isinstance(selector.cohort, str) else selector.cohort
+    communities = [selector.community] if isinstance(selector.community, str) else selector.community
     for a in population.agents:
         f = flags.get(a.id, set())
         if selector.flag and selector.flag not in f:
@@ -38,6 +40,8 @@ def select(
         if selector.not_flag and selector.not_flag in f:
             continue
         if cohorts and a.cohort not in cohorts:
+            continue
+        if communities and a.community not in communities:
             continue
         if selector.segment and selector.segment not in a.segments:
             continue

@@ -1,4 +1,4 @@
-# A small school community: juniors, seniors, their friends and families.
+# A small school community: juniors, seniors, their friends and families (25 written people).
 # Everyone roughly knows each other; seniors carry status with juniors.
 population:
   name: school-circle
@@ -33,6 +33,12 @@ population:
       share: 0.15
       age: [38, 58]
       life_stage: [settling down, mid career]
+      living:
+        - lives with their partner and their teenager, who is at the school
+        - is a single parent of a teenager at the school
+        - lives with their partner and three kids, one of them at the school
+        - lives with their sister's family and helps raise their niece at the school
+        - lives with their partner, a teenager at the school and an elderly parent
       income: {low: 0.2, mid: 0.5, high: 0.3}
       trait_shift: {trend_following: -0.15, price_sensitivity: 0.1}
   traits:
@@ -53,3 +59,1111 @@ population:
       friend|junior: friend
       friend|senior: friend
   min_trait_distance: 0.15
+
+  # Written out from the generator (seed in this file), then checked and fixed by hand (2026-10-14). These people are what runs use;
+  # the settings above only matter when generating new people. Edit freely; see guide.md.
+  agents:
+    - name: Bilal
+      age: 17
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: inner suburb
+      income: low
+      budget: 85.0
+      traits: {risk_tolerance: 0.146, price_sensitivity: 0.79, trend_following: 0.709, social_influence: 0.697}
+      big_five: {openness: 0.742, conscientiousness: 0.569, extraversion: 0.874, agreeableness: 0.416, neuroticism: 0.741}
+      chronotype: night owl
+      temperament: loud, warm and the first to start a conversation; curious and up for new experiences
+      interests: [board sports, hiking, true crime podcasts]
+      values: [independence, belonging]
+      shopping_style: hunts for deals and waits for sales
+      media_habit: checks Reddit threads before deciding
+      decision_style: follows routine and avoids surprises
+      quirk: is the group's unofficial organiser
+      music: folk
+      food: burgers
+      living: lives with mum, dad and two little sisters
+      goal_short: earn some money from a weekend job
+      goal_long: work in fashion or design
+      worries: [a friend who has been distant lately, their weight]
+      life_context: is going through a quiet, slightly lonely patch
+      stress: 0.4
+      mood: -0.163
+      platforms: []
+      posting: never
+      health: recovering from a sports injury
+      sleep: sleeps in whenever possible
+      fitness: very active, works out most days
+      relationship: in a new relationship
+      pets: two cats
+      family_closeness: has a tense relationship with their family
+      hometown: grew up in this same area
+      family_money: grew up comfortable
+      formative: had a best friend move away
+      money_mindset: anxious about money
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: uses tech like everyone else
+      cause: isn't into causes or politics
+      group: g03
+      knows: [Imani, Ximena, Dmitri, Dilnoza, Lin, Cyrus]
+    - name: Efua
+      age: 16
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: small town
+      income: low
+      budget: 55.0
+      traits: {risk_tolerance: 0.526, price_sensitivity: 0.774, trend_following: 0.652, social_influence: 0.565}
+      big_five: {openness: 0.239, conscientiousness: 0.762, extraversion: 0.442, agreeableness: 0.758, neuroticism: 0.932}
+      chronotype: in between
+      temperament: worries a lot and takes things to heart; organised and reliable; sticks to plans
+      interests: [astronomy, coffee, fishing]
+      values: [fun, self-expression]
+      shopping_style: hunts for deals and waits for sales
+      media_habit: follows a few influencers closely
+      decision_style: decides quickly on gut feeling
+      quirk: talks about their dog constantly
+      music: K-pop
+      food: tacos
+      living: lives with grandparents
+      goal_short: save up for new trainers
+      goal_long: work in fashion or design
+      worries: [money being tight, being judged online]
+      life_context: an ordinary, fairly calm week
+      stress: 0.2
+      mood: -0.093
+      platforms: [tiktok]
+      posting: sometimes
+      health: very rarely gets sick
+      sleep: struggles to fall asleep
+      fitness: mostly sedentary
+      relationship: single
+      pets: a dog
+      family_closeness: close to one parent in particular
+      hometown: grew up in this same area
+      family_money: grew up with very little money
+      formative: changed schools several times
+      money_mindset: anxious about money
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: uses tech like everyone else
+      cause: cares about the environment
+      group: g04
+      knows: [Amir, Ximena, Sami, Naledi, Mana]
+    - name: Roisin
+      age: 16
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: inner suburb
+      income: mid
+      budget: 155.0
+      traits: {risk_tolerance: 0.77, price_sensitivity: 0.827, trend_following: 0.96, social_influence: 0.254}
+      big_five: {openness: 0.822, conscientiousness: 0.38, extraversion: 0.479, agreeableness: 0.195, neuroticism: 0.588}
+      chronotype: in between
+      temperament: curious and up for new experiences; blunt and a bit competitive; doesn't mind disagreeing
+      interests: [gardening, running, reading novels]
+      values: [self-expression, curiosity]
+      shopping_style: likes being first to own new things
+      media_habit: hears about things through word of mouth
+      decision_style: changes their mind easily
+      quirk: always early to everything
+      music: hip-hop
+      food: sushi
+      living: lives with parents, only child
+      goal_short: get their driving licence
+      goal_long: make a difference in their community
+      worries: [their weight, exams and grades]
+      life_context: an ordinary, fairly calm week
+      stress: 0.2
+      mood: 0.068
+      platforms: [instagram, tiktok]
+      posting: rarely
+      health: fit and healthy but eats badly
+      sleep: struggles to fall asleep
+      fitness: very active, works out most days
+      relationship: not interested in dating right now
+      pets: a hamster
+      family_closeness: has a tense relationship with their family
+      hometown: moved here from abroad as a child
+      family_money: grew up in an average household
+      formative: won a competition they're still proud of
+      money_mindset: anxious about money
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: first to try new apps and gadgets
+      cause: isn't into causes or politics
+      group: g03
+      knows: [Dmitri, Lin, Mana, Noa, Dilnoza, Sami]
+    - name: Ximena
+      age: 18
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: outer suburb
+      income: low
+      budget: 55.0
+      traits: {risk_tolerance: 0.567, price_sensitivity: 0.382, trend_following: 0.691, social_influence: 0.804}
+      big_five: {openness: 0.407, conscientiousness: 0.292, extraversion: 0.317, agreeableness: 0.577, neuroticism: 0.849}
+      chronotype: night owl
+      temperament: worries a lot and takes things to heart; spontaneous and a bit disorganised; often late
+      interests: [street photography, travel, camping]
+      values: [comfort, adventure]
+      shopping_style: buys on impulse when something catches their eye
+      media_habit: scrolls Instagram daily
+      decision_style: goes along with the group
+      quirk: knows every shortcut in town
+      music: jazz
+      food: pizza
+      living: lives with parents, only child
+      goal_short: finish a portfolio
+      goal_long: become a nurse
+      worries: [loneliness, fitting in with friends]
+      life_context: has a birthday coming up soon
+      stress: 0.2
+      mood: 0.142
+      platforms: [instagram, tiktok]
+      posting: sometimes
+      health: fit and healthy but eats badly
+      sleep: struggles to fall asleep
+      fitness: fairly active
+      relationship: single
+      pets: a hamster
+      family_closeness: has a tense relationship with their family
+      hometown: grew up in this same area
+      family_money: grew up in an average household
+      formative: spent summers helping in a family shop
+      money_mindset: anxious about money
+      brand_attitude: doesn't care about brands at all
+      tech_attitude: uses tech like everyone else
+      cause: cares about their local community
+      group: g01
+      knows: [Bem, Naledi, Lin, Ravi, Amir, Imani, Silas]
+    - name: Khalil
+      age: 15
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: outer suburb
+      income: low
+      budget: 35.0
+      traits: {risk_tolerance: 0.484, price_sensitivity: 0.821, trend_following: 0.924, social_influence: 0.162}
+      big_five: {openness: 0.722, conscientiousness: 0.497, extraversion: 0.513, agreeableness: 0.75, neuroticism: 0.346}
+      chronotype: in between
+      temperament: kind and easy-going; hates conflict; curious and up for new experiences
+      interests: [history, local politics, meditation]
+      values: [status, sustainability]
+      shopping_style: asks friends before buying anything
+      media_habit: lives on TikTok
+      decision_style: needs to see proof from others first
+      quirk: volunteers for every committee
+      music: EDM
+      food: fried chicken
+      living: lives with dad and a stepmum
+      goal_short: earn some money from a weekend job
+      goal_long: travel the world
+      worries: [missing out on what friends are doing, their parents' health]
+      life_context: just got some good news and feels on a high
+      stress: 0.15
+      mood: 0.264
+      platforms: [tiktok]
+      posting: rarely
+      health: gets migraines now and then
+      sleep: struggles to fall asleep
+      fitness: fairly active
+      relationship: has a crush on someone at school
+      pets: fish
+      family_closeness: is the glue that keeps their family together
+      hometown: moved around a lot growing up
+      family_money: grew up in an average household
+      formative: was bullied as a kid and is careful who they trust
+      money_mindset: a natural saver
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about their local community
+      group: g03
+      knows: [Sami, Imani, Noa, Timur]
+    - name: Sasha
+      age: 43
+      cohort: family
+      life_stage: settling down
+      occupation: pharmacist
+      location: outer suburb
+      income: mid
+      budget: 95.0
+      traits: {risk_tolerance: 0.208, price_sensitivity: 0.801, trend_following: 0.293, social_influence: 0.059}
+      big_five: {openness: 0.229, conscientiousness: 0.288, extraversion: 0.624, agreeableness: 0.638, neuroticism: 0.079}
+      chronotype: in between
+      temperament: calm and hard to rattle; likes what they know and keeps to routines
+      interests: [gym training, language learning, film photography]
+      values: [community, belonging]
+      shopping_style: buys mostly second-hand
+      media_habit: barely uses social media
+      decision_style: asks a partner or parent first
+      quirk: returns about half of what they order
+      music: drill
+      food: sushi
+      living: is a single parent of a teenager at the school
+      goal_short: get healthier
+      goal_long: raise a happy family
+      worries: [rent going up, job security]
+      life_context: is busy with lots of commitments this week
+      stress: 0.5
+      mood: -0.103
+      platforms: [instagram]
+      posting: rarely
+      health: in good health
+      sleep: never gets enough sleep
+      fitness: mostly sedentary
+      relationship: dating casually
+      pets: a cat
+      family_closeness: is the glue that keeps their family together
+      hometown: grew up in this same area
+      family_money: grew up well-off
+      formative: had a long illness as a child
+      money_mindset: a natural saver
+      brand_attitude: doesn't care about brands at all
+      tech_attitude: uses tech like everyone else
+      cause: cares about health and fitness
+      group: parents
+      family: [Imani]
+      knows: [Lin, Cyrus, Noa, Naledi]
+    - name: Ravi
+      age: 15
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: inner suburb
+      income: low
+      budget: 45.0
+      traits: {risk_tolerance: 0.061, price_sensitivity: 0.441, trend_following: 0.693, social_influence: 0.477}
+      big_five: {openness: 0.641, conscientiousness: 0.295, extraversion: 0.695, agreeableness: 0.57, neuroticism: 0.659}
+      chronotype: early bird
+      temperament: spontaneous and a bit disorganised; often late; loud, warm and the first to start a conversation
+      interests: [hip-hop, streetwear, houseplants]
+      values: [fairness, ambition]
+      shopping_style: researches reviews thoroughly before buying
+      media_habit: watches YouTube reviews
+      decision_style: weighs pros and cons on paper
+      quirk: keeps a spreadsheet for everything
+      music: afrobeats
+      food: pastries
+      living: lives with parents, only child
+      goal_short: get into the school team
+      goal_long: become a known creator online
+      worries: [not having a clear plan for the future, how they look]
+      life_context: had a falling out with a close friend
+      stress: 0.5
+      mood: -0.351
+      platforms: [group_chat]
+      posting: sometimes
+      health: gets tired easily
+      sleep: struggles to fall asleep
+      fitness: very active, works out most days
+      relationship: in a new relationship
+      pets: a dog and a cat
+      family_closeness: loves their family but keeps some distance
+      hometown: grew up in a small town nearby
+      family_money: grew up with very little money
+      formative: watched a parent build a small business
+      money_mindset: a natural saver
+      brand_attitude: loyal to big, well-known brands
+      tech_attitude: a bit behind on technology
+      cause: isn't into causes or politics
+      group: g03
+      knows: [Dmitri, Cyrus, Amir, Bem]
+    - name: Noa
+      age: 20
+      cohort: friend
+      life_stage: early career
+      occupation: teaching assistant
+      location: inner suburb
+      income: low
+      budget: 65.0
+      traits: {risk_tolerance: 0.679, price_sensitivity: 0.661, trend_following: 0.789, social_influence: 0.343}
+      big_five: {openness: 0.374, conscientiousness: 0.356, extraversion: 0.6, agreeableness: 0.183, neuroticism: 0.455}
+      chronotype: in between
+      temperament: blunt and a bit competitive; doesn't mind disagreeing; spontaneous and a bit disorganised; often
+        late
+      interests: [volunteering, stand-up comedy, knitting]
+      values: [community, curiosity]
+      shopping_style: budgets every purchase in advance
+      media_habit: lives on TikTok
+      decision_style: changes their mind easily
+      quirk: buys matching items with their best friend
+      music: country
+      food: their mum's cooking
+      living: lives alone in a small studio
+      goal_short: run a 10k
+      goal_long: own a home
+      worries: [loneliness, missing out on what friends are doing]
+      life_context: is busy with lots of commitments this week
+      stress: 0.5
+      mood: -0.019
+      platforms: [group_chat, instagram, tiktok]
+      posting: sometimes
+      health: in good health
+      sleep: sleeps well
+      fitness: mostly sedentary
+      relationship: in a long-term relationship
+      pets: two cats
+      family_closeness: close to one parent in particular
+      hometown: grew up in this same area
+      family_money: grew up in an average household
+      formative: lost a grandparent they were very close to
+      money_mindset: doesn't think about money much
+      brand_attitude: loves discovering small, independent brands
+      tech_attitude: a bit behind on technology
+      cause: cares about their local community
+      group: g02
+      knows: [Sami, Imani, Cyrus, Mana]
+    - name: Dilnoza
+      age: 16
+      cohort: friend
+      life_stage: student
+      occupation: trade apprentice
+      location: inner suburb
+      income: low
+      budget: 45.0
+      traits: {risk_tolerance: 0.355, price_sensitivity: 0.605, trend_following: 0.649, social_influence: 0.129}
+      big_five: {openness: 0.301, conscientiousness: 0.699, extraversion: 0.206, agreeableness: 0.603, neuroticism: 0.257}
+      chronotype: in between
+      temperament: quiet and reserved; opens up only to close friends; calm and hard to rattle
+      interests: [skateboarding, streetwear, makeup]
+      values: [family, loyalty]
+      shopping_style: asks friends before buying anything
+      media_habit: follows a few influencers closely
+      decision_style: overthinks and often delays
+      quirk: plans holidays a year ahead
+      music: metal
+      food: fried chicken
+      living: lives with dad and a stepmum
+      goal_short: finish a portfolio
+      goal_long: start their own business
+      worries: [their weight, money being tight]
+      life_context: recently started something new and is excited
+      stress: 0.3
+      mood: 0.251
+      platforms: [group_chat, instagram, tiktok]
+      posting: rarely
+      health: has bad allergies in spring
+      sleep: keeps a strict sleep schedule
+      fitness: fairly active
+      relationship: has a crush on someone at school
+      pets: two cats
+      family_closeness: is the glue that keeps their family together
+      hometown: moved here from another city a few years ago
+      family_money: grew up with very little money
+      formative: had a best friend move away
+      money_mindset: a natural saver
+      brand_attitude: loyal to big, well-known brands
+      tech_attitude: a bit behind on technology
+      cause: cares about mental health awareness
+      group: g02
+      knows: [Mana, Timur, Bem]
+    - name: Naledi
+      age: 16
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: small town
+      income: low
+      budget: 50.0
+      traits: {risk_tolerance: 0.609, price_sensitivity: 0.334, trend_following: 0.956, social_influence: 0.839}
+      big_five: {openness: 0.503, conscientiousness: 0.379, extraversion: 0.151, agreeableness: 0.518, neuroticism: 0.205}
+      chronotype: early bird
+      temperament: quiet and reserved; opens up only to close friends; calm and hard to rattle
+      interests: [chess, gym training, anime]
+      values: [quality, authenticity]
+      shopping_style: buys on impulse when something catches their eye
+      media_habit: mostly uses group chats
+      decision_style: goes along with the group
+      quirk: always roots for the underdog
+      music: classic rock
+      food: pastries
+      living: lives with both parents and two younger siblings
+      goal_short: pass this term's exams
+      goal_long: get into a top university
+      worries: [a friend who has been distant lately, loneliness]
+      life_context: is short on money until next payday
+      stress: 0.55
+      mood: -0.127
+      platforms: [tiktok]
+      posting: sometimes
+      health: in good health
+      sleep: sleeps well
+      fitness: very active, works out most days
+      relationship: single
+      pets: a dog
+      family_closeness: loves their family but keeps some distance
+      hometown: moved here from another city a few years ago
+      family_money: grew up with very little money
+      formative: had a coach who changed their life
+      money_mindset: doesn't think about money much
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: uses tech like everyone else
+      cause: isn't into causes or politics
+      group: g03
+      knows: [Timur, Amir, Imani, Mana]
+    - name: Timur
+      age: 16
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: inner suburb
+      income: low
+      budget: 100.0
+      traits: {risk_tolerance: 0.42, price_sensitivity: 0.523, trend_following: 0.452, social_influence: 0.354}
+      big_five: {openness: 0.538, conscientiousness: 0.502, extraversion: 0.204, agreeableness: 0.567, neuroticism: 0.594}
+      chronotype: in between
+      temperament: quiet and reserved; opens up only to close friends; worries a lot and takes things to heart
+      interests: [chess, painting, baking]
+      values: [tradition, loyalty]
+      shopping_style: researches reviews thoroughly before buying
+      media_habit: checks Reddit threads before deciding
+      decision_style: decides alone and sticks to it
+      quirk: jokes through awkward moments
+      music: R&B
+      food: salads
+      living: lives with grandparents
+      goal_short: get their driving licence
+      goal_long: become a known creator online
+      worries: [exams and grades, being judged online]
+      life_context: is busy with lots of commitments this week
+      stress: 0.5
+      mood: -0.06
+      platforms: [group_chat, instagram, tiktok]
+      posting: rarely
+      health: very rarely gets sick
+      sleep: struggles to fall asleep
+      fitness: not very active
+      relationship: in a new relationship
+      pets: no pets
+      family_closeness: very close to their family
+      hometown: grew up in this same area
+      family_money: grew up comfortable
+      formative: changed schools several times
+      money_mindset: doesn't think about money much
+      brand_attitude: loves discovering small, independent brands
+      tech_attitude: uses tech like everyone else
+      cause: cares about animal welfare
+      group: g05
+      knows: [Silas, Cyrus]
+    - name: Lin
+      age: 17
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: inner suburb
+      income: low
+      budget: 60.0
+      traits: {risk_tolerance: 0.543, price_sensitivity: 0.634, trend_following: 0.378, social_influence: 0.617}
+      big_five: {openness: 0.819, conscientiousness: 0.246, extraversion: 0.884, agreeableness: 0.881, neuroticism: 0.303}
+      chronotype: early bird
+      temperament: loud, warm and the first to start a conversation; kind and easy-going; hates conflict
+      interests: [theatre, thrift shopping, cycling]
+      values: [saving money, faith]
+      shopping_style: only buys what they need, when they need it
+      media_habit: listens to podcasts on commutes
+      decision_style: is stubborn once they commit
+      quirk: refuses to pay full price on principle
+      music: hip-hop
+      food: pho
+      living: lives with both parents and a younger sibling
+      goal_short: make more friends this year
+      goal_long: own a home
+      worries: [money being tight, not having a clear plan for the future]
+      life_context: an ordinary, fairly calm week
+      stress: 0.2
+      mood: 0.011
+      platforms: [tiktok]
+      posting: often
+      health: very rarely gets sick
+      sleep: sleeps well
+      fitness: very active, works out most days
+      relationship: just went through a breakup
+      pets: fish
+      family_closeness: very close to their family
+      hometown: grew up in a small town nearby
+      family_money: grew up in an average household
+      formative: grew up looking after younger siblings
+      money_mindset: careful with money but treats themselves sometimes
+      brand_attitude: loves discovering small, independent brands
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about mental health awareness
+      group: g05
+      knows: [Mana, Imani]
+    - name: Amir
+      age: 18
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: outer suburb
+      income: low
+      budget: 95.0
+      traits: {risk_tolerance: 0.528, price_sensitivity: 0.895, trend_following: 0.172, social_influence: 0.974}
+      big_five: {openness: 0.731, conscientiousness: 0.528, extraversion: 0.42, agreeableness: 0.212, neuroticism: 0.594}
+      chronotype: early bird
+      temperament: blunt and a bit competitive; doesn't mind disagreeing; curious and up for new experiences
+      interests: [crypto, tattoos, hiking]
+      values: [authenticity, quality]
+      shopping_style: buys mostly second-hand
+      media_habit: posts regularly and has a following
+      decision_style: decides alone and sticks to it
+      quirk: never leaves the house without headphones
+      music: R&B
+      food: curry
+      living: lives with dad, who works away a lot
+      goal_short: get into the school team
+      goal_long: become financially independent
+      worries: [fitting in with friends, a friend who has been distant lately]
+      life_context: had a falling out with a close friend
+      stress: 0.5
+      mood: -0.23
+      platforms: [tiktok]
+      posting: often
+      health: fit and healthy but eats badly
+      sleep: a light sleeper
+      fitness: fairly active
+      relationship: single
+      pets: fish
+      family_closeness: close to one parent in particular
+      hometown: grew up in a small town nearby
+      family_money: grew up with very little money
+      formative: was the first in their family to try something big
+      money_mindset: a natural saver
+      brand_attitude: skeptical of hype and marketing
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about fairness and equality
+      group: g05
+    - name: Bem
+      age: 18
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: city centre
+      income: mid
+      budget: 135.0
+      traits: {risk_tolerance: 0.131, price_sensitivity: 0.297, trend_following: 0.211, social_influence: 0.462}
+      big_five: {openness: 0.291, conscientiousness: 0.447, extraversion: 0.497, agreeableness: 0.35, neuroticism: 0.411}
+      chronotype: night owl
+      temperament: likes what they know and keeps to routines; blunt and a bit competitive; doesn't mind disagreeing
+      interests: [tabletop games, reading novels, coding side projects]
+      values: [security, tradition]
+      shopping_style: sticks to a few trusted brands
+      media_habit: reads news sites every morning
+      decision_style: needs to see proof from others first
+      quirk: hates crowds
+      music: lo-fi
+      food: salads
+      living: lives with mum and stepdad
+      goal_short: make more friends this year
+      goal_long: own a home
+      worries: [a friend who has been distant lately, their weight]
+      life_context: had a falling out with a close friend
+      stress: 0.5
+      mood: -0.358
+      platforms: [instagram]
+      posting: sometimes
+      health: managing a long-term condition
+      sleep: a light sleeper
+      fitness: very active, works out most days
+      relationship: single
+      pets: a rabbit
+      family_closeness: has a tense relationship with their family
+      hometown: grew up in a small town nearby
+      family_money: grew up in an average household
+      formative: was bullied as a kid and is careful who they trust
+      money_mindset: anxious about money
+      brand_attitude: loves discovering small, independent brands
+      tech_attitude: a bit behind on technology
+      cause: isn't into causes or politics
+      group: g05
+      knows: [Dmitri]
+    - name: Dmitri
+      age: 50
+      cohort: family
+      life_stage: settling down
+      occupation: police officer
+      location: city centre
+      income: mid
+      budget: 110.0
+      traits: {risk_tolerance: 0.275, price_sensitivity: 0.659, trend_following: 0.05, social_influence: 0.355}
+      big_five: {openness: 0.933, conscientiousness: 0.275, extraversion: 0.486, agreeableness: 0.88, neuroticism: 0.319}
+      chronotype: in between
+      temperament: curious and up for new experiences; kind and easy-going; hates conflict
+      interests: [football, gym training, true crime podcasts]
+      values: [family, saving money]
+      shopping_style: researches reviews thoroughly before buying
+      media_habit: barely uses social media
+      decision_style: is stubborn once they commit
+      quirk: texts in voice notes only
+      music: R&B
+      food: kebabs
+      living: lives with their partner and their teenager, who is at the school
+      goal_short: take a proper holiday
+      goal_long: retire somewhere warm
+      worries: [their own health, how they look]
+      life_context: is getting over a cold and feels tired
+      stress: 0.35
+      mood: -0.12
+      platforms: [group_chat]
+      posting: sometimes
+      health: in good health
+      sleep: a light sleeper
+      fitness: mostly sedentary
+      relationship: in a long-term relationship
+      pets: a dog and a cat
+      family_closeness: very close to their family
+      hometown: moved around a lot growing up
+      family_money: grew up with very little money
+      formative: grew up in a very strict household
+      money_mindset: a natural saver
+      brand_attitude: loves discovering small, independent brands
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about their local community
+      group: parents
+      family: [Cyrus]
+      knows: [Sami, Silas, Mana]
+    - name: Sami
+      age: 40
+      cohort: family
+      life_stage: mid career
+      occupation: IT consultant
+      location: small town
+      income: mid
+      budget: 190.0
+      traits: {risk_tolerance: 0.27, price_sensitivity: 0.185, trend_following: 0.37, social_influence: 0.409}
+      big_five: {openness: 0.66, conscientiousness: 0.658, extraversion: 0.327, agreeableness: 0.344, neuroticism: 0.26}
+      chronotype: early bird
+      temperament: calm and hard to rattle; quiet and reserved; opens up only to close friends
+      interests: [fashion magazines, cooking, stand-up comedy]
+      values: [fairness, authenticity]
+      shopping_style: prefers small local makers over big brands
+      media_habit: reads news sites every morning
+      decision_style: is stubborn once they commit
+      quirk: rearranges their room monthly
+      music: indie rock
+      food: burgers
+      living: lives with their partner and three kids, one of them at the school
+      goal_short: spend more time with family
+      goal_long: travel the world
+      worries: [rent going up, not having a clear plan for the future]
+      life_context: has a birthday coming up soon
+      stress: 0.2
+      mood: 0.186
+      platforms: [group_chat, instagram, tiktok]
+      posting: rarely
+      health: has bad allergies in spring
+      sleep: keeps a strict sleep schedule
+      fitness: very active, works out most days
+      relationship: in a long-term relationship
+      pets: the family dog
+      family_closeness: has a tense relationship with their family
+      hometown: grew up in a small town nearby
+      family_money: grew up comfortable
+      formative: had a coach who changed their life
+      money_mindset: a spender who lives in the moment
+      brand_attitude: skeptical of hype and marketing
+      tech_attitude: a bit behind on technology
+      cause: cares about health and fitness
+      group: parents
+      family: [Naledi]
+      knows: [Cyrus, Mana]
+    - name: Cyrus
+      age: 15
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: city centre
+      income: low
+      budget: 40.0
+      traits: {risk_tolerance: 0.497, price_sensitivity: 0.571, trend_following: 0.547, social_influence: 0.428}
+      big_five: {openness: 0.656, conscientiousness: 0.32, extraversion: 0.07, agreeableness: 0.231, neuroticism: 0.507}
+      chronotype: night owl
+      temperament: quiet and reserved; opens up only to close friends; blunt and a bit competitive; doesn't mind disagreeing
+      interests: [car tuning, DIY repairs, thrift shopping]
+      values: [authenticity, comfort]
+      shopping_style: hunts for deals and waits for sales
+      media_habit: hears about things through word of mouth
+      decision_style: weighs pros and cons on paper
+      quirk: sketches on every napkin
+      music: pop
+      food: kebabs
+      living: lives with parents, only child
+      goal_short: save up for new trainers
+      goal_long: get into a top university
+      worries: [their parents' health, missing out on what friends are doing]
+      life_context: is short on money until next payday
+      stress: 0.55
+      mood: -0.211
+      platforms: [tiktok]
+      posting: rarely
+      health: has mild asthma
+      sleep: keeps a strict sleep schedule
+      fitness: not very active
+      relationship: just went through a breakup
+      pets: a dog and a cat
+      family_closeness: has a tense relationship with their family
+      hometown: grew up in this same area
+      family_money: grew up comfortable
+      formative: was bullied as a kid and is careful who they trust
+      money_mindset: a natural saver
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about their faith and religious community
+      group: g04
+    - name: Imani
+      age: 15
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: outer suburb
+      income: mid
+      budget: 130.0
+      traits: {risk_tolerance: 0.432, price_sensitivity: 0.679, trend_following: 0.98, social_influence: 0.621}
+      big_five: {openness: 0.693, conscientiousness: 0.607, extraversion: 0.249, agreeableness: 0.692, neuroticism: 0.091}
+      chronotype: early bird
+      temperament: calm and hard to rattle; quiet and reserved; opens up only to close friends
+      interests: [pets, stand-up comedy, travel]
+      values: [sustainability, loyalty]
+      shopping_style: asks friends before buying anything
+      media_habit: scrolls Instagram daily
+      decision_style: goes along with the group
+      quirk: wears the same style every day
+      music: EDM
+      food: pho
+      living: lives with mum and an older brother
+      goal_short: get their driving licence
+      goal_long: get into a top university
+      worries: [being judged online, their parents' health]
+      life_context: recently started something new and is excited
+      stress: 0.3
+      mood: 0.241
+      platforms: [group_chat, instagram, tiktok]
+      posting: rarely
+      health: in good health
+      sleep: keeps a strict sleep schedule
+      fitness: very active, works out most days
+      relationship: single
+      pets: a cat
+      family_closeness: very close to their family
+      hometown: moved here from abroad as a child
+      family_money: grew up well-off
+      formative: spent summers helping in a family shop
+      money_mindset: a natural saver
+      brand_attitude: buys what friends and influencers recommend
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about the environment
+      group: g04
+      knows: [Mana, Silas]
+    - name: Silas
+      age: 17
+      cohort: friend
+      life_stage: student
+      occupation: biology student
+      location: small town
+      income: mid
+      budget: 125.0
+      traits: {risk_tolerance: 0.822, price_sensitivity: 0.889, trend_following: 0.574, social_influence: 0.02}
+      big_five: {openness: 0.781, conscientiousness: 0.87, extraversion: 0.679, agreeableness: 0.833, neuroticism: 0.582}
+      chronotype: early bird
+      temperament: organised and reliable; sticks to plans; kind and easy-going; hates conflict
+      interests: [car tuning, reading novels, football]
+      values: [independence, saving money]
+      shopping_style: buys mostly second-hand
+      media_habit: scrolls Instagram daily
+      decision_style: decides quickly on gut feeling
+      quirk: never posts but reads everything
+      music: reggaeton
+      food: spicy noodles
+      living: lives with mum, dad and two little sisters
+      goal_short: get into the school team
+      goal_long: work in fashion or design
+      worries: [fitting in with friends, their weight]
+      life_context: had a falling out with a close friend
+      stress: 0.5
+      mood: -0.339
+      platforms: [group_chat, instagram]
+      posting: rarely
+      health: has mild asthma
+      sleep: keeps a strict sleep schedule
+      fitness: very active, works out most days
+      relationship: not interested in dating right now
+      pets: two cats
+      family_closeness: is the glue that keeps their family together
+      hometown: grew up in this same area
+      family_money: grew up in an average household
+      formative: had a coach who changed their life
+      money_mindset: careful with money but treats themselves sometimes
+      brand_attitude: loves discovering small, independent brands
+      tech_attitude: first to try new apps and gadgets
+      cause: isn't into causes or politics
+      group: g02
+      knows: [Mana]
+    - name: Mana
+      age: 15
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: inner suburb
+      income: low
+      budget: 35.0
+      traits: {risk_tolerance: 0.359, price_sensitivity: 0.423, trend_following: 0.871, social_influence: 0.407}
+      big_five: {openness: 0.832, conscientiousness: 0.116, extraversion: 0.372, agreeableness: 0.602, neuroticism: 0.591}
+      chronotype: in between
+      temperament: spontaneous and a bit disorganised; often late; curious and up for new experiences
+      interests: [pets, gardening, church community]
+      values: [adventure, ambition]
+      shopping_style: asks friends before buying anything
+      media_habit: lives on TikTok
+      decision_style: goes along with the group
+      quirk: reads the fine print
+      music: indie rock
+      food: burgers
+      living: lives with both parents and a younger sibling
+      goal_short: get their driving licence
+      goal_long: become a nurse
+      worries: [their parents' health, fitting in with friends]
+      life_context: is busy with lots of commitments this week
+      stress: 0.5
+      mood: 0.046
+      platforms: [group_chat, tiktok]
+      posting: rarely
+      health: gets migraines now and then
+      sleep: never gets enough sleep
+      fitness: mostly sedentary
+      relationship: in a new relationship
+      pets: two cats
+      family_closeness: close to one parent in particular
+      hometown: grew up in this same area
+      family_money: grew up in an average household
+      formative: grew up looking after younger siblings
+      money_mindset: doesn't think about money much
+      brand_attitude: loyal to big, well-known brands
+      tech_attitude: first to try new apps and gadgets
+      cause: cares about their local community
+      group: g01
+
+    # ---------------------------------------------------------------- added: 5 more school-circle people
+    - name: Abena
+      age: 66
+      cohort: family
+      life_stage: retired
+      occupation: retired school cook
+      location: small town
+      income: low
+      budget: 40
+      traits: {risk_tolerance: 0.2, price_sensitivity: 0.85, trend_following: 0.15, social_influence: 0.55}
+      big_five: {openness: 0.4, conscientiousness: 0.8, extraversion: 0.65, agreeableness: 0.75, neuroticism: 0.35}
+      chronotype: early bird
+      interests: [church choir, cooking for crowds, Nollywood films]
+      values: [faith, family]
+      shopping_style: buys in bulk at the market and haggles over everything
+      media_habit: watches TV and talks for hours with relatives back home
+      decision_style: prays on it, then decides firmly
+      quirk: still remembers the lunch orders of kids who left the school ten years ago
+      music: highlife
+      food: waakye
+      living: lives with their partner and their grandchild, who is at the school
+      goal_short: save enough to fly home for a cousin's wedding
+      goal_long: see the grandkids grow up
+      worries: [their own health, money being tight]
+      life_context: is short on money until the pension comes in
+      stress: 0.5
+      mood: -0.05
+      platforms: [group_chat]
+      posting: sometimes
+      health: has high blood pressure and takes it seriously
+      sleep: wakes before dawn every day
+      fitness: fairly active, walks to the market
+      relationship: married
+      pets: the family dog, whom their grandchild adores
+      family_closeness: is the glue that keeps their family together
+      hometown: moved here from Kumasi, Ghana in their twenties
+      family_money: grew up with very little money
+      formative: took in their grandchild when their own child moved abroad for work
+      money_mindset: gives every coin a job before it arrives
+      brand_attitude: thinks paying extra for a logo is foolish
+      tech_attitude: a bit behind on technology; their grandchild set up their phone
+      cause: cares about their faith and religious community
+      group: parents
+      family: [Efua]
+      knows: [Mana]
+
+    - name: Callum
+      age: 16
+      cohort: junior
+      life_stage: student
+      occupation: high school junior
+      location: small town
+      income: low
+      budget: 20
+      traits: {risk_tolerance: 0.3, price_sensitivity: 0.9, trend_following: 0.2, social_influence: 0.25}
+      big_five: {openness: 0.55, conscientiousness: 0.8, extraversion: 0.25, agreeableness: 0.8, neuroticism: 0.6}
+      chronotype: early bird
+      interests: [Formula 1, cooking on a budget, fixing bikes]
+      values: [family, loyalty]
+      shopping_style: only buys what is on the shopping list
+      media_habit: watches F1 highlights on YouTube late at night
+      decision_style: thinks about who else it affects first
+      quirk: always knows exactly how much is in their bank account
+      music: Britpop
+      food: beans on toast
+      living: lives with mum, who has MS, and a younger brother
+      goal_short: keep their grades up while looking after mum
+      goal_long: become a paramedic
+      worries: [mum's health getting worse, falling behind at school]
+      life_context: mum had a bad week, so they've been doing most of the housework
+      stress: 0.7
+      mood: -0.15
+      platforms: [group_chat]
+      posting: rarely
+      health: in good health but always tired
+      sleep: never gets enough sleep
+      fitness: fairly active, cycles everywhere
+      relationship: not interested in dating right now
+      pets: an old cat that sleeps on mum's bed
+      family_closeness: very close to their mum and brother
+      hometown: grew up in this same area
+      family_money: grew up with very little money after mum had to stop working
+      formative: became their mum's carer at 13
+      money_mindset: careful with every dollar
+      brand_attitude: doesn't care about brands at all
+      tech_attitude: uses tech like everyone else
+      cause: cares about disability rights and young carers
+      group: g01
+      knows: [Cyrus, Silas]
+
+    - name: Oksana
+      age: 17
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: city centre
+      income: low
+      budget: 50
+      traits: {risk_tolerance: 0.55, price_sensitivity: 0.6, trend_following: 0.25, social_influence: 0.8}
+      big_five: {openness: 0.9, conscientiousness: 0.6, extraversion: 0.4, agreeableness: 0.5, neuroticism: 0.45}
+      chronotype: night owl
+      interests: [poster design, sign language poetry, urban sketching]
+      values: [independence, self-expression]
+      shopping_style: buys second-hand clothes and customises them
+      media_habit: posts art on Instagram, with captions on everything
+      decision_style: watches what people do rather than what they say, then decides
+      quirk: reads lips across the canteen and knows all the gossip
+      music: drum and bass, felt through the floor at gigs
+      food: varenyky like their grandmother makes
+      living: lives with mum and grandmother in a small flat
+      goal_short: get a poster into the city's youth art show
+      goal_long: become a graphic designer
+      worries: [their dad still being in Ukraine, being left out of fast conversations]
+      life_context: just had a poster chosen for the school's spring show
+      stress: 0.4
+      mood: 0.15
+      platforms: [instagram, group_chat]
+      posting: sometimes
+      health: deaf since birth; uses hearing aids and sign language
+      sleep: stays up late drawing
+      fitness: not very active
+      relationship: in a new relationship
+      pets: no pets; the flat is too small
+      family_closeness: very close to their mum and grandmother
+      hometown: moved here from Kharkiv, Ukraine in 2022
+      family_money: grew up comfortable, then lost almost everything when they fled
+      formative: had two days to leave home and had to start again in a new language
+      money_mindset: careful, and sends what they can to family back home
+      brand_attitude: would rather make something than buy a brand
+      tech_attitude: relies on live captions and is quick with any app
+      cause: cares about refugees and disability access
+      group: g03
+      knows: [Ximena, Lin]
+
+    - name: Jalen
+      age: 19
+      cohort: family
+      life_stage: early career
+      occupation: night-shift warehouse worker
+      location: outer suburb
+      income: low
+      budget: 120
+      traits: {risk_tolerance: 0.65, price_sensitivity: 0.45, trend_following: 0.55, social_influence: 0.6}
+      big_five: {openness: 0.45, conscientiousness: 0.55, extraversion: 0.6, agreeableness: 0.65, neuroticism: 0.3}
+      chronotype: night owl
+      interests: [cars, boxing, sneaker culture]
+      values: [family, loyalty]
+      shopping_style: saves for big things like car parts, then pays cash
+      media_habit: watches car builds on TikTok during breaks
+      decision_style: decides quickly, then sticks to it
+      quirk: drives their little sister everywhere and pretends to complain
+      music: UK garage
+      food: jerk chicken from the place by the warehouse
+      living: lives with their mum and younger sister
+      goal_short: buy their first car
+      goal_long: become a qualified mechanic
+      worries: [mum working too hard, their sister falling in with the wrong crowd]
+      life_context: just switched to night shifts for better pay
+      stress: 0.4
+      mood: 0.0
+      platforms: [tiktok, group_chat]
+      posting: rarely
+      health: in good health
+      sleep: sleeps in the day after night shifts and never feels quite right
+      fitness: very active, boxes three times a week
+      relationship: dating casually
+      pets: the family cat
+      family_closeness: protective of their mum and sister
+      hometown: grew up in this same area
+      family_money: grew up in an average household until their parents split
+      formative: stepped up at home at 14 when their parents split
+      money_mindset: pays cash and never borrows
+      brand_attitude: will pay for good sneakers, but nothing else
+      tech_attitude: uses tech like everyone else
+      cause: isn't into causes or politics
+      group: g02
+      family: [Imani, Sasha]
+      knows: [Dilnoza, Amir]
+
+    - name: Enzo
+      age: 18
+      cohort: senior
+      life_stage: student
+      occupation: high school senior
+      location: inner suburb
+      income: mid
+      budget: 140
+      traits: {risk_tolerance: 0.6, price_sensitivity: 0.35, trend_following: 0.45, social_influence: 0.85}
+      big_five: {openness: 0.5, conscientiousness: 0.45, extraversion: 0.9, agreeableness: 0.7, neuroticism: 0.25}
+      chronotype: in between
+      interests: [pizza making, Serie A football, car audio]
+      values: [family, fun]
+      shopping_style: pays for everyone and works it out later
+      media_habit: posts the pizzeria's specials on Instagram
+      decision_style: decides on the spot, and the answer is usually yes
+      quirk: always has free slices for friends after closing
+      music: Italian rap
+      food: their nonna's lasagne
+      living: lives with parents, nonna and an older sister above the family pizzeria
+      goal_short: pay off the insurance on their car
+      goal_long: take over the pizzeria and open a second one
+      worries: [exams and grades, the pizzeria having a slow winter]
+      life_context: is working extra shifts because a cook quit
+      stress: 0.45
+      mood: 0.1
+      platforms: [instagram, tiktok, group_chat]
+      posting: often
+      health: in good health
+      sleep: never gets enough sleep
+      fitness: fairly active, on their feet all evening
+      relationship: single and in no rush
+      pets: a very fat cat called Mozzarella who lives in the shop
+      family_closeness: very close to their family
+      hometown: grew up here; the family is from Naples
+      family_money: grew up in an average household
+      formative: started folding pizza boxes at age 8
+      money_mindset: generous; easy come, easy go
+      brand_attitude: likes supporting local makers
+      tech_attitude: uses tech like everyone else
+      cause: cares about their local community
+      group: g05
+      knows: [Khalil, Roisin, Noa]

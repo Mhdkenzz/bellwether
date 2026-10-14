@@ -1,21 +1,21 @@
 import itertools
 import math
 
-from bellwether.population import CORE_TRAITS, sample_population
+from bellwether.population import CORE_TRAITS, generate_population
 from bellwether.population.graph import group_sizes
 from bellwether.population import pools
 import random
 
 
 def test_same_seed_same_people(panel_config):
-    a = sample_population(panel_config)
-    b = sample_population(panel_config)
+    a = generate_population(panel_config)
+    b = generate_population(panel_config)
     assert a.model_dump() == b.model_dump()
 
 
 def test_different_seed_different_people(panel_config):
-    a = sample_population(panel_config, seed=1)
-    b = sample_population(panel_config, seed=2)
+    a = generate_population(panel_config, seed=1)
+    b = generate_population(panel_config, seed=2)
     assert [x.persona for x in a.agents] != [x.persona for x in b.agents]
 
 

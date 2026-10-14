@@ -1,0 +1,8 @@
+# Everyone: every population file with written people, run together as one society.
+# Communities keep their own friend groups and families and aren't linked to each other,
+# so they only meet through public posts. Pick fewer people or another proportion when
+# starting a run (the CLI and the dashboard both ask).
+population:
+  name: all
+  description: Every written person from every community, run together.
+  include: ["*"]

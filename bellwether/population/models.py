@@ -19,6 +19,7 @@ class Agent(BaseModel):
     age: int
     cohort: str | None = None
     cohort_label: str | None = None
+    community: str = ""  # which population file they come from (matters when communities run together)
     life_stage: str
     occupation: str
     location: str
@@ -52,6 +53,23 @@ class Agent(BaseModel):
     posting: str = ""  # often | sometimes | rarely | never
     susceptibility: float = 0.5  # how easily other people's opinions move them
     profile: str = ""  # long persona for models with room to read it
+    # 7. health and wellbeing
+    health: str = ""
+    sleep: str = ""
+    fitness: str = ""
+    # 8. relationships and home
+    relationship: str = ""
+    pets: str = ""
+    family_closeness: str = ""
+    # 9. background
+    hometown: str = ""
+    family_money: str = ""
+    formative: str = ""
+    # 10. attitudes and beliefs
+    money_mindset: str = ""
+    brand_attitude: str = ""
+    tech_attitude: str = ""
+    cause: str = ""
 
 
 class Tie(BaseModel):

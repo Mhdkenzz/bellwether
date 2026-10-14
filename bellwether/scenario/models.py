@@ -22,6 +22,7 @@ class Selector(BaseModel):
     flag: str | None = None
     not_flag: str | None = None
     cohort: str | list[str] | None = None
+    community: str | list[str] | None = None  # population file(s) people come from, when several run together
     segment: str | None = None
     ids: list[str] | None = None
     where: str | None = None

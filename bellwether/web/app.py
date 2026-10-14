@@ -29,8 +29,9 @@ TASKS: dict[str, asyncio.Task] = {}
 
 
 class LaunchRequest(BaseModel):
-    population_config: str = "general-panel"
-    size: int = 20
+    population_config: str = "all"
+    size: int | None = None  # None = everyone written (or the config's size for a generated population)
+    mix: dict[str, float] | None = None  # proportion per community (combined) or cohort; None = natural mix
     population_seed: int | None = None
     scenario: str
     backend: str = DEFAULT_BACKEND
@@ -66,22 +67,62 @@ async def backends() -> list[dict[str, Any]]:
     return out
 
 
+def _parts(cfg) -> dict[str, int]:
+    from collections import Counter
+
+    from ..population.combine import available
+
+    if cfg.include:
+        return available(cfg)
+    if cfg.agents:
+        return dict(Counter(a.get("cohort") or "-" for a in cfg.agents))
+    return {}
+
+
 @app.get("/api/population-configs")
 def population_configs() -> list[dict[str, Any]]:
     out = []
     for path in sorted(POPULATION_CONFIG_DIR.glob("*.yaml")):
         try:
             cfg = load_population_config(path)
+            parts = _parts(cfg)
             out.append({"name": cfg.name, "file": path.stem, "size": cfg.size, "seed": cfg.seed,
-                        "description": cfg.description, "cohorts": [c.name for c in cfg.cohorts]})
-        except (ValidationError, yaml.YAMLError) as e:
+                        "description": cfg.description, "cohorts": [c.name for c in cfg.cohorts],
+                        "written": sum(parts.values()) or None, "parts": parts,
+                        "part_kind": "community" if cfg.include else "cohort" if parts else None})
+        except (ValidationError, ValueError, yaml.YAMLError) as e:
             out.append({"name": path.stem, "file": path.stem, "error": str(e)[:300]})
+    out.sort(key=lambda c: (c["file"] != "all", c["file"]))  # everyone first
     return out
 
 
+class PlanRequest(BaseModel):
+    size: int | None = None
+    mix: dict[str, float] | None = None
+
+
+@app.post("/api/population-configs/{name}/plan")
+def population_plan(name: str, req: PlanRequest) -> dict[str, Any]:
+    """How many people from each part a run would use (or why that size/mix can't work)."""
+    from ..population.mix import plan_counts
+
+    parts = _parts(_load_pop_config(name))
+    if not parts:
+        return {"counts": {}, "total": req.size, "natural": True}
+    try:
+        counts = plan_counts(parts, req.size, req.mix)
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from None
+    natural = counts == parts
+    return {"counts": counts, "total": sum(counts.values()), "natural": natural}
+
+
 @app.get("/api/population-configs/{name}/preview")
-def population_preview(name: str, size: int = 20, seed: int | None = None) -> dict[str, Any]:
-    pop = sample_population(_load_pop_config(name), size=size, seed=seed)
+def population_preview(name: str, size: int | None = None, seed: int | None = None) -> dict[str, Any]:
+    try:
+        pop = sample_population(_load_pop_config(name), size=size, seed=seed)
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from None
     return json.loads(pop.model_dump_json())
 
 
@@ -92,7 +133,8 @@ def scenarios() -> list[dict[str, Any]]:
         try:
             sc = load_scenario(path)
             out.append({"name": sc.name, "file": path.stem, "title": sc.title, "rounds": sc.rounds,
-                        "arms": sc.arms(), "market_size": sc.market_size,
+                        "arms": sc.arms(), "market_size": sc.market_size, "decisions": len(sc.decisions),
+                        "life": bool(sc.life),
                         "items": {k: v.model_dump() for k, v in sc.items.items()}})
         except (ValidationError, yaml.YAMLError) as e:
             out.append({"name": path.stem, "file": path.stem, "error": str(e)[:500]})
@@ -122,7 +164,7 @@ async def launch(req: LaunchRequest) -> dict[str, Any]:
     try:
         scenario = load_scenario(scenario_path)
         population = sample_population(_load_pop_config(req.population_config), size=req.size,
-                                       seed=req.population_seed)
+                                       seed=req.population_seed, mix=req.mix)
         population.save(POPULATION_DIR)
         backend = make_backend(req.backend)
     except (ValidationError, BackendError, ValueError) as e:

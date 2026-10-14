@@ -30,6 +30,7 @@ class Cohort(BaseModel):
     location: dict[str, float] | None = None
     life_stage: list[str] | None = None
     occupations: list[str] | None = None
+    living: list[str] | None = None  # living situations that fit this cohort (e.g. parents of students)
     trait_shift: dict[str, float] = Field(default_factory=dict)
 
 
@@ -91,6 +92,11 @@ class PopulationConfig(BaseModel):
     min_trait_distance: float = 0.12
     big_five: dict[str, TraitDist] = Field(default_factory=lambda: {t: TraitDist() for t in BIG_FIVE})
     social_media: SocialMediaConfig = Field(default_factory=SocialMediaConfig)
+    # Written people (see guide.md). When given, they are used instead of sampling.
+    agents: list[dict] | None = None
+    # Run several communities together: names of other population files, or ["*"] for every file with
+    # written people. A combined config has no people of its own.
+    include: list[str] | None = None
 
     @field_validator("size")
     @classmethod

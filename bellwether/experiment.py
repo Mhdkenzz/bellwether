@@ -14,6 +14,7 @@ from .backends import DecisionBackend
 from .engine.events import EventBus
 from .engine.run import RunConfig, RunResult, people_weight, run_once
 from .population import Population
+from .population.categories import CATEGORY_GROUPS
 from .scenario import Scenario
 from .settings import RUNS_DIR
 
@@ -79,13 +80,20 @@ class Experiment:
 
     def _start_payload(self) -> dict[str, Any]:
         agents = [
-            {"id": a.id, "name": a.name, "age": a.age, "cohort": a.cohort, "cohort_label": a.cohort_label,
+            {"id": a.id, "name": a.name, "age": a.age, "cohort": a.cohort, "cohort_label": a.cohort_label, "community": a.community,
              "occupation": a.occupation, "segments": a.segments, "traits": a.traits, "group": a.group,
              "persona": a.persona, "income": a.income, "budget": a.budget, "profile": a.profile,
              "big_five": a.big_five, "personality_type": a.personality_type, "platforms": a.platforms,
              "posting": a.posting, "chronotype": a.chronotype, "living": a.living, "life_context": a.life_context,
              "goal_short": a.goal_short, "goal_long": a.goal_long, "worries": a.worries,
-             "temperament": a.temperament, "susceptibility": a.susceptibility, "life_stage": a.life_stage}
+             "temperament": a.temperament, "susceptibility": a.susceptibility, "life_stage": a.life_stage,
+             "location": a.location, "interests": a.interests, "values": a.values, "shopping_style": a.shopping_style,
+             "media_habit": a.media_habit, "decision_style": a.decision_style, "quirk": a.quirk, "music": a.music,
+             "food": a.food, "health": a.health, "sleep": a.sleep, "fitness": a.fitness,
+             "relationship": a.relationship, "pets": a.pets, "family_closeness": a.family_closeness,
+             "hometown": a.hometown, "family_money": a.family_money, "formative": a.formative,
+             "money_mindset": a.money_mindset, "brand_attitude": a.brand_attitude, "tech_attitude": a.tech_attitude,
+             "cause": a.cause}
             for a in self.population.agents
         ]
         ties = [{"a": t.a, "b": t.b, "kind": t.kind, "label": t.label} for t in self.population.ties]
@@ -96,7 +104,8 @@ class Experiment:
                 "items": {k: v.model_dump() for k, v in self.scenario.items.items()},
                 "context": self.scenario.context, "model": self.backend.model, "topic": self.scenario.topic,
                 "life": self.scenario.life, "decide_at": self.scenario.decide_at,
-                "platforms": {k: v.label for k, v in self.population.config.social_media.platforms.items()}}
+                "platforms": {k: v.label for k, v in self.population.config.social_media.platforms.items()},
+                "categories": CATEGORY_GROUPS}
 
     async def run(self) -> dict[str, Any] | None:
         self.started_at = time.time()

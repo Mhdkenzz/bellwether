@@ -10,7 +10,7 @@ from bellwether.life.config import load_life
 from bellwether.life.feelings import Feelings
 from bellwether.life.rules import activity_shifts
 from bellwether.life.social import form_gatherings
-from bellwether.population import load_population_config, sample_population
+from bellwether.population import generate_population, load_population_config
 from bellwether.scenario import load_scenario
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 @pytest.fixture(scope="module")
 def school():
-    return sample_population(load_population_config(ROOT / "configs/populations/school-circle.yaml"))
+    return generate_population(load_population_config(ROOT / "configs/populations/school-circle.yaml"))
 
 
 @pytest.fixture(scope="module")
@@ -43,7 +43,7 @@ def test_every_agent_is_deep_and_typed(school):
 
 
 def test_platform_membership_varies(school):
-    big = sample_population(school.config, size=150)
+    big = generate_population(school.config, size=150)
     counts = {len(a.platforms) for a in big.agents}
     assert counts == {0, 1, 2, 3}
 
@@ -132,7 +132,7 @@ def test_hard_facts_reach_the_model(run_life):
     from bellwether.engine import EventBus as Bus
     tmp = Path(tempfile.mkdtemp())
     sc = load_scenario(ROOT / "scenarios/hoodie-life.yaml")
-    pop = sample_population(load_population_config(ROOT / "configs/populations/school-circle.yaml"))
+    pop = generate_population(load_population_config(ROOT / "configs/populations/school-circle.yaml"))
     b = Bus(tmp)
     asyncio.run(run_once(pop, sc, FakeBackend(), b, RunConfig("t", "baseline", 0, 1, char_budget=7000)))
     b.close()
@@ -156,7 +156,7 @@ def test_truancy_is_pulled_down(school, life):
 
 
 def test_minors_are_students_and_adults_have_no_exam_week(school):
-    big = sample_population(school.config, size=150)
+    big = generate_population(school.config, size=150)
     for a in big.agents:
         if a.age < 18:
             assert a.life_stage == "student"

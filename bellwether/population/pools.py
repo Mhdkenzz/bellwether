@@ -244,16 +244,43 @@ GOALS_SHORT = {
                 "make more friends this year", "get their driving licence", "earn some money from a weekend job"],
     "early career": ["get a pay rise", "move into a nicer flat", "pay off a credit card", "find a new job",
                      "run a 10k", "save for a holiday"],
+    "retired": ["keep the garden in shape", "see the grandkids more often", "keep walking every day",
+                "take a coach trip with friends", "learn to use their new phone properly"],
     "_": ["take a proper holiday", "fix up the house", "get healthier", "spend more time with family",
           "save for retirement", "learn a new skill"],
 }
+# Dreams and worries that only make sense from a certain age.
+ADULT_ONLY_DREAMS = {"retire somewhere warm"}
+ADULT_ONLY_WORRIES = {"job security", "rent going up"}
+MEDIA_NEEDS_PLATFORM = {"lives on TikTok": "tiktok", "scrolls Instagram daily": "instagram"}
 GOALS_LONG = ["start their own business", "become a nurse", "work in fashion or design", "own a home",
               "travel the world", "become financially independent", "raise a happy family", "become a known creator online",
-              "get into a top university", "retire somewhere warm", "make a difference in their community"]
+              "get into a top university", "retire somewhere warm", "make a difference in their community",
+              "see the grandkids grow up", "enjoy a long, quiet retirement", "write down the family history"]
+# (youngest, oldest) age a dream or worry makes sense for; anything not listed fits every age.
+DREAM_AGES = {
+    "get into a top university": (0, 25), "become a nurse": (0, 35), "work in fashion or design": (0, 35),
+    "become a known creator online": (0, 40), "raise a happy family": (0, 45), "start their own business": (0, 55),
+    "become financially independent": (0, 55), "own a home": (0, 60), "travel the world": (0, 62),
+    "retire somewhere warm": (35, 64), "see the grandkids grow up": (55, 100),
+    "enjoy a long, quiet retirement": (58, 100), "write down the family history": (55, 100),
+}
+WORRY_AGES = {
+    "fitting in with friends": (0, 25), "missing out on what friends are doing": (0, 35), "how they look": (0, 50),
+    "being judged online": (0, 50), "not having a clear plan for the future": (0, 45), "their weight": (0, 60),
+    "job security": (18, 64), "their parents' health": (0, 70), "their own health": (50, 100),
+    "being a burden on their family": (65, 100), "their pension not stretching far enough": (60, 100),
+}
+
+
+def fits_age(table: dict[str, tuple[int, int]], item: str, age: int) -> bool:
+    lo, hi = table.get(item, (0, 200))
+    return lo <= age <= hi
 
 WORRIES = ["money being tight", "fitting in with friends", "exams and grades", "their parents' health", "job security",
            "how they look", "missing out on what friends are doing", "rent going up", "being judged online",
-           "not having a clear plan for the future", "a friend who has been distant lately", "their weight", "loneliness"]
+           "not having a clear plan for the future", "a friend who has been distant lately", "their weight", "loneliness",
+           "their own health", "being a burden on their family", "their pension not stretching far enough"]
 MINOR_LIVING = ["lives with both parents and a younger sibling", "lives with mum and an older brother",
                 "lives with dad and a stepmum", "lives with grandparents", "lives with parents, only child",
                 "lives with mum, dad and two little sisters"]
@@ -288,3 +315,73 @@ TEMPERAMENT = {  # from the strongest Big Five pole
     ("openness", 1): "curious and up for new experiences",
     ("openness", 0): "likes what they know and keeps to routines",
 }
+
+# ---- group 7: health & wellbeing -------------------------------------------------------------
+HEALTH = ["in good health", "very rarely gets sick", "gets tired easily", "has mild asthma",
+          "recovering from a sports injury", "gets migraines now and then", "managing a long-term condition",
+          "has bad allergies in spring", "has a bad back", "fit and healthy but eats badly"]
+SLEEP = {  # trait affinities like the habits above
+    "sleeps well": {"neuroticism": -1},
+    "a light sleeper": {"neuroticism": 0.5},
+    "struggles to fall asleep": {"neuroticism": 1},
+    "never gets enough sleep": {"conscientiousness": -0.7},
+    "sleeps in whenever possible": {"conscientiousness": -1},
+    "keeps a strict sleep schedule": {"conscientiousness": 1},
+}
+FITNESS = {
+    "very active, works out most days": {"conscientiousness": 0.8, "extraversion": 0.3},
+    "fairly active": {},
+    "not very active": {"conscientiousness": -0.4},
+    "mostly sedentary": {"conscientiousness": -0.8},
+}
+
+# ---- group 8: relationships & home -----------------------------------------------------------
+RELATIONSHIP_MINOR = ["single", "has a crush on someone at school", "in a new relationship",
+                      "just went through a breakup", "not interested in dating right now"]
+RELATIONSHIP_ADULT = ["single", "dating casually", "in a long-term relationship", "married",
+                      "recently separated"]
+PETS = ["no pets", "no pets", "a dog", "a cat", "two cats", "a rabbit", "fish", "a dog and a cat", "a hamster"]
+FAMILY_CLOSENESS = {
+    "very close to their family": {"agreeableness": 0.8},
+    "close to one parent in particular": {},
+    "has a tense relationship with their family": {"agreeableness": -0.8, "neuroticism": 0.5},
+    "is the glue that keeps their family together": {"agreeableness": 1, "conscientiousness": 0.5},
+    "loves their family but keeps some distance": {"agreeableness": -0.3},
+}
+
+# ---- group 9: background ------------------------------------------------------------------------
+HOMETOWN = ["grew up in this same area", "grew up in this same area", "moved here from another city a few years ago",
+            "grew up in a small town nearby", "moved here from abroad as a child", "moved around a lot growing up"]
+FAMILY_MONEY = ["grew up with very little money", "grew up in an average household", "grew up comfortable",
+                "grew up well-off"]
+FORMATIVE = ["was bullied as a kid and is careful who they trust", "had a coach who changed their life",
+             "grew up looking after younger siblings", "lost a grandparent they were very close to",
+             "won a competition they're still proud of", "watched a parent build a small business",
+             "changed schools several times", "spent summers helping in a family shop",
+             "had a long illness as a child", "was the first in their family to try something big",
+             "had a best friend move away", "grew up in a very strict household"]
+
+# ---- group 10: attitudes & beliefs ----------------------------------------------------------------
+MONEY_MINDSET = {
+    "a natural saver": {"price_sensitivity": 1, "risk_tolerance": -0.5},
+    "a spender who lives in the moment": {"price_sensitivity": -1, "risk_tolerance": 0.7},
+    "careful with money but treats themselves sometimes": {"price_sensitivity": 0.4},
+    "anxious about money": {"price_sensitivity": 0.8, "neuroticism": 0.8},
+    "doesn't think about money much": {"price_sensitivity": -0.8},
+}
+BRAND_ATTITUDE = {
+    "loves discovering small, independent brands": {"trend_following": -0.3, "openness": 0.8},
+    "loyal to big, well-known brands": {"risk_tolerance": -0.8},
+    "skeptical of hype and marketing": {"trend_following": -1},
+    "buys what friends and influencers recommend": {"trend_following": 1},
+    "doesn't care about brands at all": {"trend_following": -0.6, "price_sensitivity": 0.4},
+}
+TECH_ATTITUDE = {
+    "first to try new apps and gadgets": {"risk_tolerance": 0.8, "openness": 0.6},
+    "uses tech like everyone else": {},
+    "a bit behind on technology": {"openness": -0.8, "risk_tolerance": -0.4},
+}
+CAUSES = ["cares about the environment", "cares about animal welfare", "cares about mental health awareness",
+          "cares about fairness and equality", "cares about their local community",
+          "isn't into causes or politics", "cares about education and young people", "cares about health and fitness",
+          "cares about their faith and religious community"]

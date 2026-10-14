@@ -4,12 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bellwether</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/static/app.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">Bellwether</div>
-    <nav id="nav">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--accent)" opacity=".15"/><path d="M5 15c2.5-6 4.5-6 7 0s4.5 6 7 0" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Bellwether</span>
+    </div>
+    <nav class="seg" id="nav">
       <button data-view="live" class="active">Live</button>
       <button data-view="results">Results</button>
       <button data-view="history">Experiments</button>
@@ -17,66 +22,70 @@
     </nav>
     <div class="spacer"></div>
     <div id="backend-status" class="pills"></div>
-    <button id="new-run" class="primary">New run</button>
+    <button id="new-run" class="btn primary"><span class="i" data-i="plus"></span>New run</button>
   </header>
 
   <main>
     <section id="view-live" class="view active">
-      <div class="runbar" id="runbar"><span class="muted">Loading the latest experiment…</span></div>
-      <div class="clock" id="clock" hidden></div>
-      <div class="live-grid">
-        <aside class="col">
-          <div class="panel">
-            <div class="panel-title">World</div>
-            <div id="world"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Today's events</div>
-            <ul id="round-events" class="events"></ul>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Happening now <span class="hint" id="now-label"></span></div>
-            <div id="happening" class="happening"></div>
-          </div>
-        </aside>
+      <div class="pagehead" id="runbar"><span class="muted">Loading the latest experiment…</span></div>
+      <div class="kpis" id="kpis"></div>
+      <div class="timeline" id="clock" hidden></div>
 
-        <section class="col col-main">
-          <div class="panel graph-panel">
-            <div class="panel-title">Social graph
-              <span class="hint">colour = latest decision · size = influence · green ring = got one · moving lines = someone influencing someone</span>
-            </div>
-            <svg id="graph" viewBox="0 0 640 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Social graph of agents"></svg>
-            <div class="graph-foot"><div id="legend" class="legend"></div><div id="graph-note" class="hint"></div></div>
+      <div class="layout">
+        <section class="card graph-card">
+          <div class="card-head">
+            <div><h2>Social graph</h2><p class="sub">Who knows whom, what they decided, and who is influencing whom right now</p></div>
           </div>
-          <div class="panel">
-            <div class="panel-title">People
-              <span class="spacer"></span>
-              <select id="sort-agents" aria-label="Sort people">
-                <option value="id">Sort: id</option>
-                <option value="choice">Sort: decision</option>
-                <option value="mood">Sort: mood</option>
-                <option value="influence">Sort: influence</option>
-                <option value="trend">Sort: trend following</option>
-                <option value="price">Sort: price sensitivity</option>
-                <option value="group">Sort: friend group</option>
-              </select>
-              <input id="filter-agents" placeholder="Filter name / job / type" aria-label="Filter people">
-            </div>
-            <div id="agent-grid" class="agent-grid"></div>
+          <div class="graph-wrap">
+            <svg id="graph" viewBox="0 0 640 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Social graph of people"></svg>
+            <div id="graph-tip" class="graph-tip" hidden></div>
           </div>
+          <div class="card-foot"><div id="legend" class="legend"></div><div id="graph-note" class="hint"></div></div>
         </section>
 
-        <aside class="col">
-          <div class="panel">
-            <div class="panel-title">Days <span class="hint">click a day for its summary</span></div>
+        <aside class="rail">
+          <section class="card">
+            <div class="tabs" id="rail-tabs" role="tablist">
+              <button data-tab="now" class="active">Now <span class="hint" id="now-label"></span></button>
+              <button data-tab="feed">Live feed</button>
+              <button data-tab="events">Events</button>
+            </div>
+            <div class="tabpanel active" data-panel="now"><div id="happening" class="happening"></div></div>
+            <div class="tabpanel" data-panel="feed">
+              <label class="hint follow"><input type="checkbox" id="feed-follow" checked> follow</label>
+              <ol id="feed" class="feed"></ol>
+            </div>
+            <div class="tabpanel" data-panel="events"><ul id="round-events" class="events"></ul></div>
+          </section>
+          <section class="card">
+            <div class="card-head"><div><h2>Days</h2><p class="sub">Click a day for its summary</p></div></div>
             <div id="round-chart"></div>
-          </div>
-          <div class="panel feed-panel">
-            <div class="panel-title">Live feed <span class="spacer"></span><label class="hint"><input type="checkbox" id="feed-follow" checked> follow</label></div>
-            <ol id="feed" class="feed"></ol>
-          </div>
+          </section>
+          <section class="card">
+            <div class="card-head"><div><h2>Stock</h2></div></div>
+            <div id="world"></div>
+          </section>
         </aside>
       </div>
+
+      <section class="card people-card">
+        <div class="card-head">
+          <div><h2>People</h2><p class="sub">Click anyone to see their day, feelings and influence</p></div>
+          <div class="toolbar">
+            <input id="filter-agents" placeholder="Search name, job, type…" aria-label="Filter people">
+            <select id="sort-agents" aria-label="Sort people">
+              <option value="id">Sort: default</option>
+              <option value="choice">Sort: decision</option>
+              <option value="mood">Sort: mood</option>
+              <option value="influence">Sort: influence</option>
+              <option value="trend">Sort: trend following</option>
+              <option value="price">Sort: price sensitivity</option>
+              <option value="group">Sort: friend group</option>
+            </select>
+          </div>
+        </div>
+        <div id="agent-grid" class="agent-grid"></div>
+      </section>
     </section>
 
     <section id="view-results" class="view"><div id="results" class="page"></div></section>
@@ -84,24 +93,35 @@
     <section id="view-population" class="view"><div id="population" class="page"></div></section>
   </main>
 
-  <aside id="drawer" class="drawer" hidden>
-    <div class="drawer-head"><div id="drawer-title"></div><button id="drawer-close" aria-label="Close">✕</button></div>
+  <aside id="drawer" class="drawer" hidden aria-label="Person details">
+    <div class="drawer-head"><div id="drawer-title"></div><button id="drawer-close" class="icon-btn" aria-label="Close">✕</button></div>
+    <div class="tabs drawer-tabs" id="drawer-tabs" role="tablist">
+      <button data-tab="overview" class="active">Overview</button>
+      <button data-tab="days">Day by day</button>
+      <button data-tab="influence">Influence</button>
+      <button data-tab="profile">Profile</button>
+      <button data-tab="traces">Model traces</button>
+    </div>
     <div id="drawer-body" class="drawer-body"></div>
   </aside>
 
   <dialog id="day-dialog" class="wide">
-    <div class="dialog-head"><h2 id="day-title"></h2><button id="day-close" aria-label="Close">✕</button></div>
+    <div class="dialog-head"><h2 id="day-title"></h2><button id="day-close" class="icon-btn" aria-label="Close">✕</button></div>
     <div id="day-body" class="dialog-body"></div>
   </dialog>
 
   <dialog id="launch">
     <form id="launch-form" method="dialog">
       <h2>New run</h2>
-      <label>Population config <select name="population_config" id="f-pop"></select></label>
+      <label>Population <select name="population_config" id="f-pop"></select></label>
       <div class="row">
-        <label>Agents <input name="size" type="number" min="2" max="1000" value="20"></label>
+        <label>How many people? <input name="size" id="f-size" type="number" min="2" max="1000"></label>
         <label>Population seed <input name="population_seed" type="number" placeholder="config default"></label>
       </div>
+      <fieldset id="f-mix-box"><legend>Proportion <span id="f-mix-kind" class="hint"></span></legend>
+        <div id="f-mix" class="mix"></div>
+        <p id="f-plan" class="hint"></p>
+      </fieldset>
       <label>Scenario <select name="scenario" id="f-scenario"></select></label>
       <fieldset><legend>Arms</legend><div id="f-arms" class="checks"></div></fieldset>
       <fieldset><legend>Model</legend><div id="f-backends" class="radios"></div></fieldset>
@@ -112,8 +132,8 @@
       <p id="launch-estimate" class="hint"></p>
       <p id="launch-error" class="error"></p>
       <div class="actions">
-        <button value="cancel" formnovalidate>Cancel</button>
-        <button id="launch-go" class="primary" value="go">Start</button>
+        <button value="cancel" class="btn" formnovalidate>Cancel</button>
+        <button id="launch-go" class="btn primary" value="go">Start</button>
       </div>
     </form>
   </dialog>

@@ -141,7 +141,31 @@ def segments_for(agent_fields: dict, traits: dict[str, float], cfg: PopulationCo
     return [name for name, rule in cfg.segments.items() if evaluate(rule, env)]
 
 
-def sample_population(cfg: PopulationConfig, size: int | None = None, seed: int | None = None) -> Population:
+def sample_population(cfg: PopulationConfig, size: int | None = None, seed: int | None = None,
+                      mix: dict[str, float] | None = None) -> Population:
+    """The people a run uses: everyone written in the file (or a share of them), several communities
+    combined (`include:`), or, for a config with no written people, a freshly generated population.
+
+    `mix` sets the proportion of each part: communities for a combined config, cohorts otherwise.
+    """
+    if cfg.include:
+        from .combine import combine
+        return combine(cfg, size=size, seed=seed, mix=mix)
+    if cfg.agents:
+        from .handmade import build_handmade
+        return build_handmade(cfg, size=size, seed=seed, mix=mix)
+    if mix:
+        unknown = set(mix) - {c.name for c in cfg.cohorts}
+        if unknown:
+            raise ValueError(f"unknown cohorts in mix: {sorted(unknown)}")
+        total = sum(mix.values())
+        cfg = cfg.model_copy(update={"cohorts": [c.model_copy(update={"share": mix.get(c.name, 0) / total})
+                                                 for c in cfg.cohorts]})
+    return generate_population(cfg, size=size, seed=seed)
+
+
+def generate_population(cfg: PopulationConfig, size: int | None = None, seed: int | None = None) -> Population:
+    """Draw new people from the config's distributions and option pools (ignores written people)."""
     size = size or cfg.size
     seed = cfg.seed if seed is None else seed
     rng = random.Random(f"bellwether-population:{cfg.name}:{size}:{seed}")
@@ -240,6 +264,8 @@ def sample_population(cfg: PopulationConfig, size: int | None = None, seed: int 
     ties = build_ties(agents, cfg, rng)
     for agent in agents:
         agent.persona = render_persona(agent, cfg)
+    for agent in agents:
+        agent.community = cfg.name
     population = Population(name=cfg.name, seed=seed, config=cfg, agents=agents, ties=ties)
     deepen_population(population)
     return population

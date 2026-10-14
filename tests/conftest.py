@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from bellwether.population import load_population_config, sample_population
+from bellwether.population import generate_population, load_population_config
 from bellwether.scenario import load_scenario
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,12 +18,12 @@ def panel_config():
 
 @pytest.fixture(scope="session")
 def population(panel_config):
-    return sample_population(panel_config)
+    return generate_population(panel_config)
 
 
 @pytest.fixture(scope="session")
 def population_150(panel_config):
-    return sample_population(panel_config, size=150)
+    return generate_population(panel_config, size=150)
 
 
 @pytest.fixture()
