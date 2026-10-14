@@ -1,8 +1,8 @@
 # Bellwether
 
 A domain-agnostic society simulation engine. A seeded population of distinct agents lives through a
-scenario timeline; each agent's decisions come from a typed-decision model (Laya locally, Jev via
-OpenRouter), shaped by their traits and their social circle. Results compare a baseline against
+scenario timeline; each agent's decisions come from a local, free model (Gemma or Laya), shaped by their traits, needs,
+money and their social circle. Results compare a baseline against
 variants across seeds.
 
 ## Run it
@@ -56,3 +56,16 @@ and edit agents, field by field: [guide.md](guide.md).
 Laya reads at most 1,024 tokens per question, so agent states are kept to ~2,600 characters.
 
 V1 uses local, free models only: Gemma and Laya (jev is hidden). Laya checkpoints barely respond to persona traits (trait probe moves < 0.07); Gemma moves them modestly in the right direction, and the engine's trait rules add the rest, so Gemma is the default.
+
+## Scenarios: people decide, events don't push
+
+An event can tell people something, change the world (prices, stock), set flags, or **offer** an activity
+in a life scenario. It cannot push anyone's choice: `sway` was removed, and a scenario that uses it fails to
+load. Choices move only through the person (the model reading them, plus their traits, needs and money) and
+through real contact with other people.
+
+The hoodie meetup shows how this works. The brand invites past buyers and their friend groups. Going is one
+more evening option for each invited person, chosen like any other activity. Whatever the meetup changes
+comes from who chooses to go, who they talk to there and what they saw. The run reports `went_to_meetup`,
+`goers_who_bought` and `invited_non_goers_who_bought`, and the meetup version can be compared with the
+baseline on the same seeds.

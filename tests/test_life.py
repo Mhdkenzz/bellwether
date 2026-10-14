@@ -162,3 +162,50 @@ def test_minors_are_students_and_adults_have_no_exam_week(school):
             assert a.life_stage == "student"
         if a.life_stage != "student":
             assert "exam week" not in a.life_context
+
+
+@pytest.fixture(scope="module")
+def meetup_run(school, tmp_path_factory):
+    import json
+
+    sc = load_scenario(ROOT / "scenarios/hoodie-life.yaml")
+    pop = generate_population(school.config, size=60)
+    out = {}
+    for arm in ("baseline", "meetup"):
+        d = tmp_path_factory.mktemp(arm)
+        bus = EventBus(d)
+        res = asyncio.run(run_once(pop, sc, FakeBackend(), bus, RunConfig("t", arm, 0, 1, char_budget=7000)))
+        bus.close()
+        traces = [json.loads(l) for l in (d / "traces.jsonl").read_text().splitlines()]
+        out[arm] = (res, bus, traces)
+    return out
+
+
+def _evening_day1(traces):
+    return {t["agent"]: t for t in traces if t.get("kind") == "life" and t["round"] == 1 and t["slot"] == "evening"}
+
+
+def test_meetup_is_only_an_option_for_the_invited(meetup_run):
+    _, bus, traces = meetup_run["meetup"]
+    invited = set(next(ev for e in bus.history if e["type"] == "slot_started" and e["round"] == 1
+                       for ev in e["events"] if "invited" in ev["text"])["audience"])
+    evening = _evening_day1(traces)
+    offered = {a for a, t in evening.items() if "brand_meetup" in t["questions"]["activity"]["criteria"]}
+    assert invited and offered == invited  # invited people can choose it; nobody else even sees it
+    _, _, base = meetup_run["baseline"]
+    assert not any("brand_meetup" in t["questions"]["activity"]["criteria"] for t in base if t.get("kind") == "life")
+
+
+def test_going_to_the_meetup_is_each_persons_choice(meetup_run):
+    res, bus, traces = meetup_run["meetup"]
+    evening = _evening_day1(traces)
+    went = {a for a, t in evening.items() if t["answers"]["activity"]["choice"] == "brand_meetup"}
+    offered = {a for a, t in evening.items() if "brand_meetup" in t["questions"]["activity"]["criteria"]}
+    assert went and went < offered  # some go, some don't - they decide
+    assert res.flags.get("went_to_meetup") == len(went)  # the flag goes to exactly the people who chose to go
+    assert res.metrics["went_to_meetup"] > 0 and 0 <= res.metrics["goers_who_bought"] <= 1
+    meet = [g for e in bus.history if e["type"] == "slot_finished" and e["round"] == 1 and e["slot"] == "evening"
+            for g in e["gatherings"] if g["place"] == "the brand's meetup"]
+    assert all(set(g["members"]) <= went for g in meet)  # only people who chose to go meet there
+    shifts = [s for t in traces for a in t["answers"].values() for s in (a.get("shifts") or {}).values()]
+    assert not any("event" in s for s in shifts)

@@ -49,6 +49,13 @@ decisions:
     role: sentiment
     instructions: How does this person feel about the brand right now?
     criteria: ["0 = dislikes or distrusts the brand", "1 = excited and loyal"]
+  meetup:
+    type: choice
+    instructions: The brand has invited this person to its meetup with a first look at drop 2. Do they go?
+    options:
+      go: {text: Go to the meetup, set_flags: [went_to_meetup, answered_meetup]}
+      skip: {text: Skip it, set_flags: [answered_meetup]}
+    ask_if: {flag: invited_to_meetup, not_flag: answered_meetup}
 timeline:
   - round: 1
     text: Drop 2 announced on the brand's Instagram - 50 hoodies at $60, going live this weekend.
@@ -62,12 +69,15 @@ variants:
       text: The brand cut the drop 2 price by 10%, to $54.
       effects: {items.hoodie.price: 54}
   meetup:
+    # An invitation, not a push: each invited person decides whether to go (the `meetup` decision).
+    # Those who went only learn what they saw; any effect on buying comes from them.
     - round: 1
-      text: The brand held a meetup for past buyers plus their friends and family, with a first look at drop 2.
+      text: The brand invited past buyers and their friends and family to a meetup, with a first look at drop 2.
       visible_to: {flag: past_buyer, include_groups: true}
-      set_flags: [attended_meetup]
-      # Seeing the drop in person with friends: more likely to buy now and to hype it.
-      sway: {act: 1.0, delay: -0.3, positive: 0.8}
+      set_flags: [invited_to_meetup]
+    - round: 2
+      text: At the brand's meetup they saw drop 2 up close and met other people who were thinking about it.
+      visible_to: {flag: went_to_meetup}
 metrics:
   sold_out: items.hoodie.sold_out
   sell_through: items.hoodie.sell_through
@@ -76,6 +86,8 @@ metrics:
   hype_share: share("share", "hype")
   warn_share: share("share", "warn")
   mood: mean_score("sentiment")
+  went_to_meetup: flag_count("went_to_meetup")
+  goers_who_bought: flag_share("has:hoodie", "went_to_meetup")
 headline:
   - Does drop 2 sell out?
   - Does a 10% price cut or a meetup raise demand?

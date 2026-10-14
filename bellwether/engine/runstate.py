@@ -42,17 +42,6 @@ class AgentState:
     scores: dict[int, dict[str, float]] = field(default_factory=dict)
     outcome: dict[int, dict[str, Any]] = field(default_factory=dict)
     sentiment: float | None = None
-    sways: list[tuple[int, dict[str, float], float]] = field(default_factory=list)  # (round, sway, decay)
-
-    def sway_now(self, round_: int) -> dict[str, float]:
-        out: dict[str, float] = {}
-        for r, sway, decay in self.sways:
-            if r > round_:
-                continue
-            factor = decay ** (round_ - r)
-            for key, value in sway.items():
-                out[key] = out.get(key, 0.0) + value * factor
-        return out
 
 
 @dataclass

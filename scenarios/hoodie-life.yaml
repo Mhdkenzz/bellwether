@@ -76,18 +76,31 @@ variants:
       effects: {items.hoodie.price: 54}
       visible_to: {flag: aware}
   meetup:
+    # The brand invites past buyers and their friend groups. Going is up to each person: it is one
+    # more evening option for the invited, chosen like any other activity (their mood, energy,
+    # personality and plans decide). Nothing pushes anyone - whatever the meetup changes comes from
+    # who chooses to go, who they talk to there, and what they saw.
     - round: 1
-      slot: evening
-      text: The brand held a meetup for past buyers plus their friends and family, with a first look at drop 2.
+      slot: morning
+      text: The brand invited past buyers and their friends and family to a meetup this evening, with a first look at drop 2.
       visible_to: {flag: past_buyer, include_groups: true}
-      set_flags: [attended_meetup]
-      sway: {act: 1.0, delay: -0.3, positive: 0.8}
+      set_flags: [invited_to_meetup]
+      offer:
+        slot: evening
+        activity: {id: brand_meetup, text: Go to the brand's meetup for a first look at drop 2, place: the brand's meetup,
+                   social: event, tags: [social, outing, trend], effects: {energy: -0.1}}
+        set_flags: [went_to_meetup]
+        memory: went to the brand's meetup and saw drop 2 up close
 metrics:
   sold_out: items.hoodie.sold_out
   sell_through: items.hoodie.sell_through
   unmet_demand_people: items.hoodie.missed_out
   priced_out_people: items.hoodie.priced_out
   aware_people: flag_count("aware")
+  invited_to_meetup: flag_count("invited_to_meetup")
+  went_to_meetup: flag_count("went_to_meetup")
+  goers_who_bought: flag_share("has:hoodie", "went_to_meetup")
+  invited_non_goers_who_bought: flag_share("has:hoodie", "invited_to_meetup", "went_to_meetup")
   hype_share: share("share", "hype")
   warn_share: share("share", "warn")
   mood: mean_score("sentiment")

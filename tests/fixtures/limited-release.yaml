@@ -49,7 +49,6 @@ variants:
       text: The maker invited early fans and their friends to a preview.
       visible_to: {flag: early_fan, include_groups: true}
       set_flags: [saw_preview]
-      sway: {act: 1.0, positive: 0.8}
 metrics:
   people_with_item: flag_count("has:item")
   fans_share: share("share", "praise")

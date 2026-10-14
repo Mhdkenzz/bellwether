@@ -95,23 +95,23 @@ def form_gatherings(choices: dict[str, Activity], population: Population, rng: r
         group = sorted({aid, *fam})
         used.update(group)
         add("household", "home", group)
-    # colleagues/classmates: grouped by place, friends first, leftovers paired with whoever is there
-    col = by_kind.get("colleagues", [])
-    by_place: dict[str, list[str]] = {}
-    for aid in col:
-        by_place.setdefault(choices[aid].place, []).append(aid)
-    for place, members in sorted(by_place.items()):
-        comps = _components(members, population, allow_weak=True)
-        singles = [c[0] for c in comps if len(c) == 1]
-        for comp in comps:
-            if len(comp) > 1:
-                for g in _split(comp, rng):
-                    add("colleagues", place, g)
-        rng.shuffle(singles)
-        for i in range(0, len(singles) - 1, 2):
-            add("colleagues", place, sorted(singles[i:i + 2]))
-        if len(singles) % 2:
-            add("alone", place, [singles[-1]])
+    # colleagues/classmates and events: grouped by place, friends first, leftovers paired with whoever is there
+    for kind in ("colleagues", "event"):
+        by_place: dict[str, list[str]] = {}
+        for aid in by_kind.get(kind, []):
+            by_place.setdefault(choices[aid].place, []).append(aid)
+        for place, members in sorted(by_place.items()):
+            comps = _components(members, population, allow_weak=True)
+            singles = [c[0] for c in comps if len(c) == 1]
+            for comp in comps:
+                if len(comp) > 1:
+                    for g in _split(comp, rng):
+                        add(kind, place, g)
+            rng.shuffle(singles)
+            for i in range(0, len(singles) - 1, 2):
+                add(kind, place, sorted(singles[i:i + 2]))
+            if len(singles) % 2:
+                add("alone", place, [singles[-1]])
     for aid in by_kind.get("alone", []):
         add("alone", choices[aid].place, [aid])
     return out

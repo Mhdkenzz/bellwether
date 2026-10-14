@@ -8,7 +8,7 @@ option stances (act / delay / decline), signal polarities, prices and budgets.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 from ..population import Agent
@@ -42,7 +42,6 @@ class Context:
     n_negative: int
     n_acquired: int
     disappointed: bool  # missed out or priced out last round
-    sway: dict[str, float] = field(default_factory=dict)  # event nudges by stance / polarity
 
     @property
     def social(self) -> float:
@@ -65,7 +64,6 @@ def context(agent: Agent, st: AgentState, round_: int) -> Context:
         n_negative=sum(s.polarity == "negative" for s in st.inbox),
         n_acquired=sum(s.acquired for s in st.inbox),
         disappointed=last.get("result") in ("missed_out", "priced_out"),
-        sway=st.sway_now(round_),
     )
 
 
@@ -114,9 +112,6 @@ def trait_shifts(spec: DecisionSpec, ctx: Context, world: World) -> dict[str, di
                 parts["disappointed"] = DISAPPOINTMENT * ctx.disappointed
             elif pol == "none":
                 parts["quiet"] = QUIET * (0.5 - si)
-        nudge = ctx.sway.get(opt.signal) if spec.role == "signal" else ctx.sway.get(stance or "")
-        if nudge:
-            parts["event"] = nudge
         out[key] = {k: round(v, 4) for k, v in parts.items() if abs(v) > 1e-9}
     return out
 

@@ -47,6 +47,12 @@ class LifeEngine:
         first_item = next(iter(runner.world.items.values()), None)
         self.topic = runner.sc.topic or (first_item.label if first_item else "what's going on")
         self.platform_labels = {k: v.label for k, v in self.pop.config.social_media.platforms.items()}
+        # activities scenario events made available: (day, slot) -> [(activity, who may choose it, offer)]
+        self.extra: dict[tuple[int, str], list[tuple[Activity, set[str], Any]]] = {}
+        slots = {s.id for s in self.cfg.slots}
+        for ev in runner.sc.all_events():
+            if ev.offer and ev.offer.slot not in slots:
+                raise ValueError(f"offer slot {ev.offer.slot!r} is not a slot of life config {self.cfg.name!r}")
 
     # ---- relationships & stance -------------------------------------------------------
     def aff(self, a: str, b: str) -> float:
@@ -111,7 +117,8 @@ class LifeEngine:
     # ---- one agent's everyday choice ----------------------------------------------------
     async def choose(self, aid: str, day: int, slot: Slot) -> Activity:
         r, agent, st = self.r, self.pop.agent(aid), self.r.states[aid]
-        offered = slot.offered(agent.life_stage)
+        offered = slot.offered(agent.life_stage) + [act for act, who, _ in self.extra.get((day, slot.id), [])
+                                                    if aid in who]
         blocked = {a.id for a in offered if a.cost > st.budget_left + 1e-9}
         question = {"type": "choice",
                     "instructions": f"It's {slot.label.lower()}. What does {agent.name} most likely do?",
@@ -294,6 +301,11 @@ class LifeEngine:
             here = [e for e in todays if (e.slot or self.cfg.slots[0].id) == slot.id]
             before = len(event_log)
             r._apply_events(day, here, slot_seen, event_log)
+            for ev, logged in zip(here, event_log[before:]):
+                if ev.offer:  # one more option for the people who saw it - they decide whether to take it
+                    key = (ev.offer.round or day, ev.offer.slot)
+                    act = Activity.model_validate(ev.offer.activity)
+                    self.extra.setdefault(key, []).append((act, set(logged["audience"]), ev.offer))
             for aid, texts in slot_seen.items():
                 seen_all[aid] += texts
                 self.today[aid] += [f"{slot.label}: heard that {t[0].lower() + t[1:]}" for t in texts]
@@ -303,6 +315,11 @@ class LifeEngine:
             choices = {a.id: act for a, act in zip(self.pop.agents, acts)}
             for aid, act in choices.items():
                 self.live_out(aid, act, slot)
+                for extra, _, offer in self.extra.get((day, slot.id), []):
+                    if act.id == extra.id:  # they chose to go
+                        r.states[aid].flags.update(offer.set_flags)
+                        if offer.memory:
+                            r.states[aid].memory.append(MemoryEntry(day, "life", offer.memory))
             gatherings = form_gatherings(choices, self.pop, rng, slot.id, day)
             for g in gatherings:
                 self.converse(g, day, slot, choices, rng)

@@ -218,8 +218,6 @@ class Runner:
                 seen[aid].append(ev.text)
                 self.states[aid].flags.update(ev.set_flags)
                 self.states[aid].flags.add("aware")
-                if ev.sway:
-                    self.states[aid].sways.append((round_, dict(ev.sway), ev.sway_decay))
             log.append({"text": ev.text, "visible_to": len(who), "changes": changes, "slot": ev.slot,
                         "audience": sorted(who)})
 

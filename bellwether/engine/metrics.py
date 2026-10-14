@@ -57,6 +57,11 @@ def compute_metrics(
     def flag_count(flag: str) -> float:
         return weight * sum(1 for aid in ids if flag in states[aid].flags)
 
+    def flag_share(flag: str, among: str, excluding: str | None = None) -> float:
+        """Of the people with `among` (and without `excluding`), the share who also have `flag`."""
+        group = [aid for aid in ids if among in states[aid].flags and not (excluding and excluding in states[aid].flags)]
+        return sum(1 for aid in group if flag in states[aid].flags) / len(group) if group else 0.0
+
     items = {}
     for name, it in world.items.items():
         items[name] = {
@@ -85,7 +90,8 @@ def compute_metrics(
 
     env = {"items": items, "market_size": weight * len(ids), "agents": len(ids), "weight": weight,
            "rounds": scenario.rounds}
-    funcs = {"count": count, "share": share, "ever": ever, "mean_score": mean_score, "flag_count": flag_count}
+    funcs = {"count": count, "share": share, "ever": ever, "mean_score": mean_score, "flag_count": flag_count,
+             "flag_share": flag_share}
     for name, expr in scenario.metrics.items():
         try:
             v = evaluate(expr, env, funcs)

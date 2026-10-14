@@ -94,19 +94,39 @@ class InitialFlag(BaseModel):
     count: float | None = None  # exact number of real people (scaled to agents)
 
 
+class OfferSpec(BaseModel):
+    """An extra activity an event makes available to the people who saw it (life scenarios).
+
+    Nobody is made to do it: it is one more option in that slot, chosen like any other. Whatever it
+    changes comes from who chooses it, who they meet there and what they remember, never a fixed push.
+    """
+
+    slot: str  # the time of day it happens
+    round: int | None = None  # the day; default = the event's day
+    activity: dict[str, Any]  # a life activity: id, text, place, social, tags, effects, cost
+    set_flags: list[str] = Field(default_factory=list)  # given only to the people who choose it
+    memory: str | None = None  # what they remember about it afterwards (plain facts, no verdict)
+
+
 class EventSpec(BaseModel):
+    """Something that happens: people who see it learn the text; it can change the world, set flags,
+    or offer an activity. It cannot push anyone's choices - people decide for themselves."""
+
     round: int
     text: str
     slot: str | None = None  # time of day (life scenarios); default = first slot
     visible_to: Selector = Field(default_factory=lambda: Selector(all=True))
     effects: dict[str, Any] = Field(default_factory=dict)
     set_flags: list[str] = Field(default_factory=list)
-    # Nudge (log-odds) for agents who see this event, keyed by option stance
-    # (act / delay / decline) or message polarity (positive / neutral / negative / none).
-    # It fades by `sway_decay` each round after the event.
-    sway: dict[Literal["act", "delay", "decline", "positive", "neutral", "negative", "none"], float] = Field(
-        default_factory=dict)
-    sway_decay: float = 0.5
+    offer: OfferSpec | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _no_push(cls, v: Any) -> Any:
+        if isinstance(v, dict) and "sway" in v:
+            raise ValueError("events can't push choices (`sway` was removed): offer an activity or ask a decision, "
+                             "and let people decide")
+        return v
 
 
 class Rules(BaseModel):
@@ -173,6 +193,14 @@ class Scenario(BaseModel):
         for ev in self.all_events():
             if not 1 <= ev.round <= self.rounds:
                 raise ValueError(f"event round {ev.round} is outside 1..{self.rounds}")
+            if ev.offer:
+                from ..life.config import Activity
+
+                if not self.life:
+                    raise ValueError("an event can only offer an activity in a life scenario (set `life:`)")
+                Activity.model_validate(ev.offer.activity)
+                if not ev.round <= (ev.offer.round or ev.round) <= self.rounds:
+                    raise ValueError(f"offer round {ev.offer.round} must be between the event's round and {self.rounds}")
         if self.rules:
             for dname, opts in self.rules.adjust.items():
                 if dname not in self.decisions:

@@ -59,6 +59,8 @@ def activity_shifts(activity: Activity, agent: Agent, f: Feelings, slot_id: str)
         s["needs money"] = 1.2 * agent.traits.get("price_sensitivity", 0.5) - 0.4
     if "outing" in tags:
         s["curiosity"] = 0.5 * (o - 0.5)
+    if "trend" in tags:  # trend-followers lean in, people who don't care about trends lean away
+        s["into trends"] = 1.0 * (agent.traits.get("trend_following", 0.5) - 0.5)
     if slot_id == "night" and "rest" in tags:
         s["early bird"] = 0.7 if agent.chronotype == "early bird" else -0.4 if agent.chronotype == "night owl" else 0.0
     return {k: round(v, 3) for k, v in s.items() if abs(v) > 1e-6}

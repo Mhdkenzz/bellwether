@@ -18,7 +18,8 @@ class Activity(BaseModel):
     id: str
     text: str
     place: str = "home"
-    social: Literal["friends", "household", "colleagues", "online_friends"] | None = None
+    # who it brings you together with; "event" = everyone else who chose this activity, at its place
+    social: Literal["friends", "household", "colleagues", "online_friends", "event"] | None = None
     media: Literal["scroll", "post", "both"] | None = None
     tags: list[str] = Field(default_factory=list)
     effects: dict[str, float] = Field(default_factory=dict)

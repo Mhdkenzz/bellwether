@@ -94,18 +94,19 @@ def test_raw_mode_has_no_shifts(population, scenario, tmp_path):
     assert all(a.get("shifts") is None for r in recs for a in r["answers"].values() if "noisy" in a)
 
 
-def test_event_sway_reaches_only_viewers_and_fades(population, scenario, tmp_path):
+def test_events_cannot_push_choices(population, scenario, tmp_path):
     import json
+
+    import pytest
+    from pydantic import ValidationError
+
+    from bellwether.scenario.models import EventSpec
+
+    with pytest.raises(ValidationError, match="events can't push choices"):
+        EventSpec.model_validate({"round": 1, "text": "x", "sway": {"act": 1.0}})
     bus = EventBus(tmp_path)
     asyncio.run(run_once(population, scenario, FakeBackend(), bus, RunConfig("t", "insiders", 0, 1, concurrency=8)))
     bus.close()
     recs = [json.loads(l) for l in (tmp_path / "traces.jsonl").read_text().splitlines()]
-    viewers = {e["agent"] for e in bus.history if e["type"] == "agent_decided"}
-    r2 = {r["agent"]: r for r in recs if r["round"] == 2}
-    r3 = {r["agent"]: r for r in recs if r["round"] == 3}
-    swayed = [a for a, r in r2.items() if (r["answers"]["share"]["shifts"] or {}).get("praise", {}).get("event")]
-    assert swayed and len(swayed) < len(viewers)
-    a = swayed[0]
-    assert r3[a]["answers"]["share"]["shifts"]["praise"]["event"] == r2[a]["answers"]["share"]["shifts"]["praise"]["event"] / 2
-    r1 = [r for r in recs if r["round"] == 1]
-    assert not any((r["answers"]["share"]["shifts"] or {}).get("praise", {}).get("event") for r in r1)
+    shifts = [s for r in recs for a in r["answers"].values() for s in (a.get("shifts") or {}).values()]
+    assert shifts and not any("event" in s for s in shifts)  # only the person's own traits and circle move them
