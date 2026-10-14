@@ -1,0 +1,93 @@
+# Hoodie drop 2, lived as 3 real days. People only learn about the drop through
+# Instagram, the brand's messages, conversations at school/home and posts they scroll past.
+# Market ~250 people (school circle + friends + family); each agent stands for 250/N.
+name: hoodie-life
+title: Hoodie drop 2 - three days of school life
+rounds: 3
+life: everyday
+decide_at: evening
+topic: the drop 2 hoodie
+currency_symbol: "$"
+market_size: 250
+context: >-
+  A small hoodie brand started by seniors at the school. Its first drop of 40 hoodies sold
+  out inside the school circle, and owning one is seen as cool, especially by juniors.
+items:
+  hoodie: {label: Drop 2 hoodie, price: 60, stock: 50}
+show_stock: true
+initial_state:
+  - flag: past_buyer
+    count: 40
+    select: {cohort: [junior, senior, friend]}
+    memory: They bought a hoodie in the first drop.
+trait_context:
+  price_sensitivity: how much the $60 price weighs on them
+  trend_following: how much they want what the cool seniors and their friends have
+  social_influence: how much others copy what they wear
+decisions:
+  action:
+    type: choice
+    instructions: What does this person do about the drop 2 hoodie right now?
+    options:
+      buy_now: {text: Buy a hoodie now, consume: {item: hoodie}}
+      wait: {text: Hold off and see what others do, stance: delay}
+      skip: {text: Not buying this drop, stance: decline}
+    ask_if: {flag: live_seen, not_flag: "has:hoodie"}
+  share:
+    type: choice
+    role: signal
+    instructions: How will this person talk about the brand to people they know?
+    options:
+      hype: {text: Hype it up and tell people to get one, signal: positive}
+      neutral: {text: Mention it without much opinion, signal: neutral}
+      warn: {text: Say it's not worth it, signal: negative}
+      silent: {text: Not bring it up, signal: none}
+    ask_if: {flag: aware}
+  sentiment:
+    type: score
+    role: sentiment
+    instructions: How does this person feel about the brand right now?
+    criteria: ["0 = dislikes or distrusts the brand", "1 = excited and loyal"]
+    ask_if: {flag: aware}
+timeline:
+  - round: 1
+    slot: morning
+    text: The brand announced drop 2 on Instagram - 50 hoodies at $60, going live tomorrow evening.
+    visible_to: {platform: instagram}
+  - round: 1
+    slot: morning
+    text: The brand messaged past buyers - drop 2 goes live tomorrow evening, 50 hoodies at $60.
+    visible_to: {flag: past_buyer}
+  - round: 2
+    slot: evening
+    text: Drop 2 is live now on the brand's site - 50 hoodies at $60.
+    visible_to: {flag: aware}
+    set_flags: [live_seen]
+  - round: 3
+    slot: morning
+    text: Last call for drop 2 on the brand's Instagram story.
+    visible_to: {flag: aware}
+    set_flags: [live_seen]
+variants:
+  price_cut:
+    - round: 1
+      slot: morning
+      text: The brand said drop 2 will be 10% off - $54 instead of $60.
+      effects: {items.hoodie.price: 54}
+      visible_to: {flag: aware}
+  meetup:
+    - round: 1
+      slot: evening
+      text: The brand held a meetup for past buyers plus their friends and family, with a first look at drop 2.
+      visible_to: {flag: past_buyer, include_groups: true}
+      set_flags: [attended_meetup]
+      sway: {act: 1.0, delay: -0.3, positive: 0.8}
+metrics:
+  sold_out: items.hoodie.sold_out
+  sell_through: items.hoodie.sell_through
+  unmet_demand_people: items.hoodie.missed_out
+  priced_out_people: items.hoodie.priced_out
+  aware_people: flag_count("aware")
+  hype_share: share("share", "hype")
+  warn_share: share("share", "warn")
+  mood: mean_score("sentiment")

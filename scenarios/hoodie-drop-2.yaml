@@ -1,0 +1,81 @@
+# Weakness-finding test: the second drop of a senior-made hoodie brand.
+# Real history: drop 1 sold all 40 hoodies inside a small circle where everyone
+# knows each other; seniors made it, juniors wanted it because it's cool.
+#
+# Scaling: the reachable market is ~250 people (school juniors and seniors in the
+# circle, plus friends and family). With N agents each agent stands for 250/N
+# people, so 50 hoodies = 4 agents' worth at N=20 and 30 agents' worth at N=150.
+name: hoodie-drop-2
+title: Hoodie drop 2 (school brand)
+rounds: 3
+currency_symbol: "$"
+market_size: 250
+context: >-
+  A small hoodie brand started by seniors at the school. Its first drop of 40
+  hoodies sold out inside the school circle, and owning one is seen as cool,
+  especially by juniors. A second drop is coming.
+items:
+  hoodie: {label: Drop 2 hoodie, price: 60, stock: 50}
+show_stock: true
+initial_state:
+  - flag: past_buyer
+    count: 40
+    select: {cohort: [junior, senior, friend]}
+    memory: You bought a hoodie in the first drop.
+trait_context:
+  price_sensitivity: how much the $60 price weighs on them
+  trend_following: how much they want what the cool seniors and their friends have
+  social_influence: how much others copy what they wear
+decisions:
+  action:
+    type: choice
+    instructions: As this person, decide what you do about the drop 2 hoodie this round.
+    options:
+      buy_now: {text: Buy a hoodie now, consume: {item: hoodie}}
+      wait: {text: Hold off and see what others do, stance: delay}
+      skip: {text: Not buying this drop, stance: decline}
+    ask_if: {not_flag: "has:hoodie"}
+  share:
+    type: choice
+    role: signal
+    instructions: As this person, what do you tell people you know about the brand this round?
+    options:
+      hype: {text: Hype it up and tell them to get one, signal: positive}
+      neutral: {text: Mention it without much opinion, signal: neutral}
+      warn: {text: Say it's not worth it, signal: negative}
+      silent: {text: Say nothing about it, signal: none}
+  sentiment:
+    type: score
+    role: sentiment
+    instructions: How does this person feel about the brand right now?
+    criteria: ["0 = dislikes or distrusts the brand", "1 = excited and loyal"]
+timeline:
+  - round: 1
+    text: Drop 2 announced on the brand's Instagram - 50 hoodies at $60, going live this weekend.
+  - round: 2
+    text: Drop 2 is live now.
+  - round: 3
+    text: Last call for drop 2.
+variants:
+  price_cut:
+    - round: 1
+      text: The brand cut the drop 2 price by 10%, to $54.
+      effects: {items.hoodie.price: 54}
+  meetup:
+    - round: 1
+      text: The brand held a meetup for past buyers plus their friends and family, with a first look at drop 2.
+      visible_to: {flag: past_buyer, include_groups: true}
+      set_flags: [attended_meetup]
+      # Seeing the drop in person with friends: more likely to buy now and to hype it.
+      sway: {act: 1.0, delay: -0.3, positive: 0.8}
+metrics:
+  sold_out: items.hoodie.sold_out
+  sell_through: items.hoodie.sell_through
+  unmet_demand_people: items.hoodie.missed_out
+  priced_out_people: items.hoodie.priced_out
+  hype_share: share("share", "hype")
+  warn_share: share("share", "warn")
+  mood: mean_score("sentiment")
+headline:
+  - Does drop 2 sell out?
+  - Does a 10% price cut or a meetup raise demand?

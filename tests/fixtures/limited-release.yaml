@@ -1,0 +1,55 @@
+# Test fixture only: a generic limited release used to exercise the engine.
+name: limited-release
+title: Limited release (test fixture)
+rounds: 3
+market_size: 100
+context: A local maker is releasing a small batch of a new item.
+items:
+  item: {label: Item, price: 40, stock: 30}
+show_stock: true
+initial_state:
+  - flag: early_fan
+    select: {fraction: 0.25}
+    memory: You liked the maker's last release.
+trait_context:
+  price_sensitivity: how much the price affects you here
+decisions:
+  action:
+    type: choice
+    instructions: Decide what this person does about the release this round.
+    options:
+      get: {text: Get one now, consume: {item: item}}
+      wait: {text: Wait and see, stance: delay}
+      pass: {text: Not interested, stance: decline}
+    ask_if: {not_flag: "has:item"}
+  share:
+    type: choice
+    role: signal
+    instructions: What does this person tell people they know this round?
+    options:
+      praise: {text: Recommends it, signal: positive}
+      mention: {text: Mentions it neutrally, signal: neutral}
+      knock: {text: Advises against it, signal: negative}
+      quiet: {text: Says nothing, signal: none}
+  mood:
+    type: score
+    role: sentiment
+    instructions: How does this person feel about the maker right now?
+    criteria: ["0 = negative", "1 = very positive"]
+timeline:
+  - round: 1
+    text: The maker announced the release.
+variants:
+  discount:
+    - round: 1
+      text: The price was cut to $30.
+      effects: {items.item.price: 30}
+  insiders:
+    - round: 2
+      text: The maker invited early fans and their friends to a preview.
+      visible_to: {flag: early_fan, include_groups: true}
+      set_flags: [saw_preview]
+      sway: {act: 1.0, positive: 0.8}
+metrics:
+  people_with_item: flag_count("has:item")
+  fans_share: share("share", "praise")

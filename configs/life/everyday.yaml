@@ -1,0 +1,92 @@
+# Everyday life: what people can do at each time of day. Domain-agnostic; any scenario can use it.
+# effects: per-slot change to feelings (energy, mood, stress, hunger, social_need) and money.
+# social: who the activity brings you together with (friends | household | colleagues | online_friends).
+# media: scroll (see posts) | post (publish) | both.
+# tags drive the engine's needs/personality rules (eat, rest, social, solo, exercise, media, post,
+# study, work, routine, slack, fun, treat, outing, family, worry, money).
+name: everyday
+slots:
+  - id: morning
+    label: Morning (7-9am)
+    activities:
+      - {id: breakfast_home, text: Get up on time and have a proper breakfast, tags: [eat, routine],
+         effects: {hunger: -0.6, energy: 0.1, mood: 0.04}}
+      - {id: breakfast_family, text: Have breakfast with the people at home and chat, social: household,
+         tags: [eat, family, social], effects: {hunger: -0.6, mood: 0.08, social_need: -0.15}}
+      - {id: rush_out, text: Snooze the alarm, grab something quick and rush out, tags: [eat, slack],
+         effects: {hunger: -0.3, stress: 0.1, energy: -0.05}}
+      - {id: scroll_in_bed, text: Stay in bed scrolling the phone until it's late, then skip breakfast and rush out hungry, media: scroll, tags: [media, rest, slack],
+         effects: {energy: 0.05, hunger: 0.1, stress: 0.04}}
+      - {id: morning_workout, text: Go for an early run or workout, place: gym, tags: [exercise],
+         effects: {energy: -0.1, mood: 0.12, stress: -0.15, hunger: 0.1}}
+      - {id: cafe_breakfast, text: Grab coffee and breakfast at a cafe on the way, place: cafe, cost: 6, tags: [eat, treat],
+         effects: {hunger: -0.5, mood: 0.08}}
+  - id: day
+    label: Daytime (9am-4pm)
+    obligations:
+      student: "It is a school day. Lessons run 9am-4pm and they are expected to be in class; skipping or being on the phone in lessons can get them in trouble."
+      early career: "It is a work day. They are expected at work 9am-5pm."
+      settling down: "It is a work day. They are expected at work 9am-5pm."
+      mid career: "It is a work day. They are expected at work 9am-5pm."
+      late career: "It is a work day. They are expected at work 9am-5pm."
+    activities:
+      - {id: focus_class, text: Pay attention in class and keep up with the work, place: school, life_stages: [student],
+         tags: [study, routine, obligation], effects: {stress: 0.04, energy: -0.12, hunger: -0.3}}
+      - {id: friends_at_school, text: Go to lessons and spend breaks and lunch with friends, place: school, social: colleagues,
+         life_stages: [student], tags: [social, eat, fun], effects: {mood: 0.08, hunger: -0.4, energy: -0.08}}
+      - {id: alone_at_school, text: Go to lessons but keep to yourself at breaks and eat lunch alone, place: school,
+         life_stages: [student], tags: [solo, eat], effects: {hunger: -0.4, energy: -0.06}}
+      - {id: phone_in_class, text: Spend lessons secretly on the phone instead of listening (risky), place: school,
+         media: scroll, life_stages: [student], tags: [media, slack, truancy],
+         effects: {stress: -0.02, energy: -0.08, hunger: -0.3}}
+      - {id: skip_class, text: Skip class and go to the mall with whoever is around, place: mall, social: friends,
+         life_stages: [student], tags: [slack, fun, outing, social, truancy], effects: {mood: 0.08, stress: 0.1, hunger: -0.3}}
+      - {id: focus_work, text: Put the head down and get work done, place: work,
+         life_stages: [early career, settling down, mid career, late career], tags: [work, routine, obligation],
+         effects: {stress: 0.05, energy: -0.12, hunger: -0.3}}
+      - {id: colleagues_lunch, text: Chat with colleagues and have lunch together, place: work, social: colleagues,
+         life_stages: [early career, settling down, mid career, late career], tags: [social, eat],
+         effects: {mood: 0.06, hunger: -0.4, energy: -0.08}}
+      - {id: desk_lunch, text: Work through and eat lunch alone at the desk, place: work,
+         life_stages: [early career, settling down, mid career, late career], tags: [solo, eat, work],
+         effects: {hunger: -0.4, stress: 0.04, energy: -0.1}}
+      - {id: phone_at_work, text: Kill time on the phone between tasks, place: work, media: scroll,
+         life_stages: [early career, settling down, mid career, late career], tags: [media, slack, truancy],
+         effects: {energy: -0.06, hunger: -0.3}}
+      - {id: errands, text: Run errands around town, place: mall, life_stages: [retired], tags: [routine, outing],
+         effects: {energy: -0.1, hunger: -0.3}}
+      - {id: coffee_with_friend, text: Meet a friend for coffee, place: cafe, cost: 5, social: friends,
+         life_stages: [retired, settling down], tags: [social, treat], effects: {mood: 0.08, hunger: -0.2}}
+      - {id: hobby_day, text: Spend the day on a hobby at home, life_stages: [retired], tags: [solo, fun],
+         effects: {mood: 0.05, stress: -0.08, hunger: -0.3}}
+      - {id: tv_and_phone, text: Watch TV and scroll the phone most of the day, media: scroll, life_stages: [retired],
+         tags: [media, rest], effects: {energy: 0.02, hunger: -0.3}}
+  - id: evening
+    label: Evening (5-9pm)
+    activities:
+      - {id: hang_out, text: Hang out with friends at someone's place or the park, place: friend's place, cost: 5,
+         social: friends, tags: [social, fun, outing], effects: {mood: 0.1, hunger: -0.3, energy: -0.1}}
+      - {id: family_dinner, text: Have dinner at home and talk about the day, social: household,
+         tags: [eat, family, social], effects: {hunger: -0.7, mood: 0.05}}
+      - {id: gym, text: Go to the gym or play sport, place: gym, tags: [exercise],
+         effects: {energy: -0.15, mood: 0.1, stress: -0.2, hunger: 0.2}}
+      - {id: hobby_alone, text: Do a hobby alone, tags: [solo, fun], effects: {mood: 0.05, stress: -0.1}}
+      - {id: post_online, text: Post something on social media and reply to comments, media: both, tags: [media, post],
+         effects: {mood: 0.03}}
+      - {id: homework_chores, text: Do homework, chores or life admin, tags: [study, routine],
+         effects: {stress: -0.05, energy: -0.08}}
+      - {id: paid_shift, text: Work a paid evening shift or side hustle, place: work, life_stages: [student, early career],
+         tags: [work, money], money: 40, effects: {energy: -0.15, stress: 0.05, hunger: -0.3}}
+      - {id: go_shopping, text: Go shopping at the mall, place: mall, cost: 20, tags: [treat, outing],
+         effects: {mood: 0.08, energy: -0.08}}
+  - id: night
+    label: Night (9pm-midnight)
+    activities:
+      - {id: sleep_early, text: Wind down and go to sleep early, tags: [rest], sleep: 0.15, effects: {stress: -0.1}}
+      - {id: late_scroll, text: Stay up late scrolling, media: scroll, tags: [media, slack], sleep: -0.2,
+         effects: {stress: 0.03, mood: 0.02}}
+      - {id: late_chat, text: Stay up chatting with friends in the group chat, social: online_friends, media: scroll,
+         tags: [social, media], sleep: -0.15, effects: {mood: 0.06}}
+      - {id: shows_games, text: Watch shows or play games, tags: [fun, solo], sleep: -0.1, effects: {stress: -0.08}}
+      - {id: lie_awake, text: Lie awake thinking about things, tags: [worry], sleep: -0.2,
+         effects: {stress: 0.1, mood: -0.05}}

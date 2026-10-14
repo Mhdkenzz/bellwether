@@ -1,0 +1,17 @@
+# secrets
+.env
+
+# local environments and model runtimes (3.5 GB)
+.venv/
+.runtimes/
+
+# generated data
+.cache/
+/runs/
+/populations/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# local editor/agent config
+.claude/

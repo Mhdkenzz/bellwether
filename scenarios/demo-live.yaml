@@ -1,0 +1,41 @@
+name: demo-live
+title: Live demo release
+rounds: 1
+market_size: 100
+context: A small maker announces a limited release to a local community.
+items:
+  item: {label: Demo item, price: 40, stock: 30}
+show_stock: true
+trait_context:
+  price_sensitivity: how much the price matters for this release
+  trend_following: how much other people affect your interest
+decisions:
+  action:
+    type: choice
+    instructions: Decide what you do about the demo release.
+    options:
+      get: {text: Get one now, consume: {item: item}}
+      wait: {text: Hold off and see what happens, stance: delay}
+      skip: {text: Skip this release, stance: decline}
+  share:
+    type: choice
+    role: signal
+    instructions: What do you tell people you know about the release?
+    options:
+      praise: {text: Recommend it, signal: positive}
+      mention: {text: Mention it neutrally, signal: neutral}
+      warn: {text: Warn people away, signal: negative}
+      quiet: {text: Say nothing, signal: none}
+  sentiment:
+    type: score
+    role: sentiment
+    instructions: How do you feel about the release?
+    criteria: ["0 = negative", "1 = very positive"]
+timeline:
+  - round: 1
+    text: The demo release is now available.
+metrics:
+  sold: items.item.sold
+  sell_through: items.item.sell_through
+  demand: items.item.demand
+  praise_share: share("share", "praise")

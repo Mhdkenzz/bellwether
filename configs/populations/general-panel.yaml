@@ -1,0 +1,17 @@
+# A general adult panel. Domain-agnostic: reused across any scenario.
+population:
+  name: general-panel
+  description: Mixed adults across ages, incomes and places; no scenario assumptions.
+  size: 20
+  seed: 42
+  age: [18, 72]
+  income: {low: 0.35, mid: 0.45, high: 0.20}
+  traits:
+    risk_tolerance:    {beta: [2, 2]}
+    price_sensitivity: {beta: [2.5, 2]}
+    trend_following:   {beta: [2, 2.5]}
+    social_influence:  {beta: [1.8, 3]}
+  budget: {low: [20, 80], mid: [60, 200], high: [150, 600]}
+  budget_label: spare money this month
+  groups: {size: [3, 6], same_cohort: 0.8, weak_ties_per_agent: 2}
+  min_trait_distance: 0.15

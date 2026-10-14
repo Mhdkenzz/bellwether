@@ -1,0 +1,55 @@
+# A small school community: juniors, seniors, their friends and families.
+# Everyone roughly knows each other; seniors carry status with juniors.
+population:
+  name: school-circle
+  description: Juniors and seniors at one school plus friends and family; tight-knit, status flows from seniors to juniors.
+  size: 20
+  seed: 7
+  cohorts:
+    - name: junior
+      label: junior at the school
+      share: 0.45
+      age: [15, 16]
+      life_stage: [student]
+      occupations: [high school junior]
+      income: {low: 0.6, mid: 0.35, high: 0.05}
+      trait_shift: {trend_following: 0.15, social_influence: -0.05}
+    - name: senior
+      label: senior at the school
+      share: 0.25
+      age: [17, 18]
+      life_stage: [student]
+      occupations: [high school senior]
+      income: {low: 0.5, mid: 0.4, high: 0.1}
+      trait_shift: {social_influence: 0.2}
+    - name: friend
+      label: friend from outside the school
+      share: 0.15
+      age: [15, 20]
+      life_stage: [student, early career]
+      income: {low: 0.6, mid: 0.35, high: 0.05}
+    - name: family
+      label: parent or relative of a student
+      share: 0.15
+      age: [38, 58]
+      life_stage: [settling down, mid career]
+      income: {low: 0.2, mid: 0.5, high: 0.3}
+      trait_shift: {trend_following: -0.15, price_sensitivity: 0.1}
+  traits:
+    risk_tolerance:    {beta: [2, 2]}
+    price_sensitivity: {beta: [2.5, 2], shift: {income.low: 0.1, income.high: -0.2}}
+    trend_following:   {beta: [2.2, 2]}
+    social_influence:  {beta: [1.8, 3]}
+  budget: {low: [30, 110], mid: [60, 200], high: [150, 500]}
+  budget_label: to spend on wants this month
+  groups:
+    size: [3, 6]
+    same_cohort: 0.7
+    weak_ties_per_agent: 3
+    cross_cohort_labels:
+      junior|senior: schoolmate
+      family|junior: family
+      family|senior: family
+      friend|junior: friend
+      friend|senior: friend
+  min_trait_distance: 0.15
